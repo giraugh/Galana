@@ -34,6 +34,12 @@ types[2] = sEnemy_3
 types[3] = sEnemy_4
 type = 1
 
+//Fire Types
+ftypes[0] = sEnemy_Fire_1
+ftypes[1] = -1
+ftypes[2] = -1
+ftypes[3] = -1
+
 //State Control
 state = "default"
 
@@ -79,7 +85,16 @@ seperation_dist = 15
 seperation_force = 5
 
 //invinci beams
-beam_alpha = 0
+beam_alpha_decrease = .05
+beam_colour = COL_ENEMY_PURPLE_DARK
+beam_roffset = 0
+beam_yoffset = -5
+beam_width = 5
+
+//fire
+fire = instance_create(x, y, oEnemyFire)
+fire.stick_to = id
+fire.ftypes = ftypes
 </string>
           </argument>
         </arguments>
@@ -268,6 +283,32 @@ if (instance_exists(ne)) {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Create Invinci Beams
+if (type == 3) {
+    with (oEnemy) {
+        scrCreateBeam(other, beam_colour, beam_alpha_decrease, beam_width, beam_roffset, beam_yoffset)
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="oBullet">
       <action>
@@ -310,46 +351,6 @@ if (not is_invincible) {
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="72">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw Invinci lines
-
-//if shielder exists
-if (scrGetEnemyCount(3) &gt; 0) {
-    beam_alpha = lerp(beam_alpha, 1, 0.2)
-} else {
-    beam_alpha = lerp(beam_alpha, 0, 0.2)
-}
-
-//draw line
-with (oEnemy) {
-    if (type == 3) {
-        draw_set_alpha(other.beam_alpha)
-        draw_set_colour(COL_ENEMY_PURPLE_LIGHT)
-        draw_line_width(x, y, other.x, other.y, 5)
-        break
-    }   
-}   
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -369,14 +370,13 @@ with (oEnemy) {
             <kind>1</kind>
             <string>///Draw Correct Type
 
-
 //reset image alpha
 image_alpha = 1
 
-//if im passing through a bullet, draw me transparent
+//is there a bullet we are passing over?
 if (place_meeting(x, y, oBullet)) {
     if (instance_place(x, y, oBullet).team != team) {
-        image_alpha = 0.4
+        /*DO SOME COOL EFFECT*/
     }
 }
 

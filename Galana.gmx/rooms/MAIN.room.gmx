@@ -11,7 +11,10 @@
   <colour>16777215</colour>
   <showcolour>-1</showcolour>
   <code>//Create camera
-instance_create(0, 0, oCamera)</code>
+instance_create(0, 0, oCamera)
+
+//create dev cheats
+instance_create(0, 0, oDevCheats)</code>
   <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>

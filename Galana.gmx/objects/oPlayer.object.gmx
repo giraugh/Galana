@@ -45,7 +45,7 @@ key_shoot = vk_space
 edge_padding = 32 + 16
 
 //Shooting
-bullet_offset_x = 7
+bullet_offset_x = 9
 bullet_offset_y = 20
 bullet_speed = 7
 bullet_which = -1
@@ -67,6 +67,10 @@ team = TEAM_FRIENDLY
 
 //camera shake
 shake_amount = 15
+
+//fire
+fire = instance_create(x, y, oPlayerFire)
+fire.stick_to = id
 
 </string>
           </argument>
@@ -272,7 +276,7 @@ bullet_timer++
           <argument>
             <kind>1</kind>
             <string>///Are We Dead?
-if (hth &lt;= 0) {
+if (hth &lt;= 0 and !global.DEV_INVINCIBLE) {
     instance_destroy()
     
     //create fade out object

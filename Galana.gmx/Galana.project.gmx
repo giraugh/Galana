@@ -12,8 +12,10 @@
       <sprite>sprites\sPlayer_Shooting</sprite>
       <sprite>sprites\sPlayer_Idle</sprite>
       <sprite>sprites\sPlayer_Bullet</sprite>
+      <sprite>sprites\sPlayer_Fire</sprite>
     </sprites>
     <sprites name="Enemies">
+      <sprite>sprites\sEnemy_Fire_1</sprite>
       <sprite>sprites\sEnemy_1</sprite>
       <sprite>sprites\sEnemy_2</sprite>
       <sprite>sprites\sEnemy_3</sprite>
@@ -33,6 +35,7 @@
       <script>scripts\scrCameraFlash.gml</script>
       <script>scripts\scrGameFreeze.gml</script>
       <script>scripts\scrGetEnemyCount.gml</script>
+      <script>scripts\scrCreateBeam.gml</script>
     </scripts>
     <scripts name="callbacks">
       <script>scripts\cbkJustSpawned.gml</script>
@@ -89,10 +92,12 @@
     <objects name="Player">
       <object>objects\oPlayer</object>
       <object>objects\oBullet</object>
+      <object>objects\oPlayerFire</object>
     </objects>
     <objects name="Enemy">
       <object>objects\oEnemy</object>
       <object>objects\oBulletEnemy</object>
+      <object>objects\oEnemyFire</object>
     </objects>
     <objects name="FX">
       <object>objects\oExplosion</object>
@@ -101,6 +106,8 @@
       <object>objects\oCameraFlash</object>
       <object>objects\oCircleFade</object>
       <object>objects\oTextFadeIn</object>
+      <object>objects\oSticks</object>
+      <object>objects\oInvinciBeam</object>
     </objects>
     <objects name="Spawners">
       <object>objects\pSpawner</object>
@@ -108,6 +115,7 @@
     </objects>
     <objects name="Meta">
       <object>objects\oCamera</object>
+      <object>objects\oDevCheats</object>
     </objects>
   </objects>
   <rooms name="rooms">
