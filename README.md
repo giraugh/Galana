@@ -15,4 +15,4 @@ A Space Game that is fully realised in an integrated 3rd-party engine. Equipped 
   
   _\*If you have both bought the game and are playing seperately on seperate computers._
   
-  __\*NOTE:___ This is not representative of the final game, or the current state of the game or for that matter any proposed notion of the game design whatsoever at any point._
+  __\*NOTE:___ This is not representative of the final game, or the current state of the game or for that matter any proposed notion of the game design whatsoever at any point.
