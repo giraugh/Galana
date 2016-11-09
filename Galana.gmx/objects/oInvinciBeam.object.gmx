@@ -129,6 +129,8 @@ if (parent != noone) {
             <kind>1</kind>
             <string>///Draw Line
 
+var dc = draw_colour
+
 //do we have a target?
 if (draw_to != noone) {
     //is it alive?
@@ -136,7 +138,7 @@ if (draw_to != noone) {
         
         //setup
         draw_set_alpha(alpha)
-        draw_set_colour(draw_colour)
+        draw_set_colour(dc)
         
         //draw line
         draw_line_width(x, y, draw_to.x, draw_to.y, draw_width)

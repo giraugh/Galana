@@ -54,6 +54,7 @@ if (stick_to != noone) {
     if (instance_exists(stick_to)) {
         x = stick_to.x
         y = stick_to.y
+        image_angle = stick_to.image_angle
     }
 }
 </string>

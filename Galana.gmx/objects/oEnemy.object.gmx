@@ -373,12 +373,6 @@ if (not is_invincible) {
 //reset image alpha
 image_alpha = 1
 
-//is there a bullet we are passing over?
-if (place_meeting(x, y, oBullet)) {
-    if (instance_place(x, y, oBullet).team != team) {
-        /*DO SOME COOL EFFECT*/
-    }
-}
 
 //draw type
 draw_sprite_ext(types[type], image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)

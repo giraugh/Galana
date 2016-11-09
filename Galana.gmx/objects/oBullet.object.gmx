@@ -85,6 +85,37 @@ image_angle = point_direction(0, 0, hsp, vsp)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Fade out inside enemies
+
+//reset alpha
+image_alpha = 1
+
+//are we inside?
+if (place_meeting(x, y, oEnemy)) {
+    if (instance_place(x, y, oEnemy).team != team) {
+        image_alpha = .45
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="0">
       <action>
