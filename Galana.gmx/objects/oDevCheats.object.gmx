@@ -28,7 +28,7 @@
             <string>///Define Dev Cheats
 
 //player can't die
-global.DEV_INVINCIBLE = true
+global.DEV_INVINCIBLE = false
 </string>
           </argument>
         </arguments>
