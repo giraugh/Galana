@@ -16,6 +16,7 @@
     </sprites>
     <sprites name="Enemies">
       <sprite>sprites\sEnemy_Fire_1</sprite>
+      <sprite>sprites\sEnemy_Fire_4</sprite>
       <sprite>sprites\sEnemy_1</sprite>
       <sprite>sprites\sEnemy_2</sprite>
       <sprite>sprites\sEnemy_3</sprite>

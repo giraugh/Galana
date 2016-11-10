@@ -135,6 +135,19 @@ var dc = draw_colour
 if (draw_to != noone) {
     //is it alive?
     if (instance_exists(draw_to)) {
+    
+        //is it currently preventing damage?
+        with (parent) {
+            if (place_meeting(x, y, oBullet)) {
+                if (instance_place(x, y, oBullet).team != team) {
+                    var h, s, v;
+                    h = colour_get_hue(dc)
+                    s = colour_get_saturation(dc)
+                    v = colour_get_value(dc)
+                    dc = make_colour_hsv(h+30, s+50, v)
+                }
+            }
+        }
         
         //setup
         draw_set_alpha(alpha)
