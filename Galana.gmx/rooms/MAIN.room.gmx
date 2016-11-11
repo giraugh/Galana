@@ -59,7 +59,7 @@ instance_create(0, 0, oDevCheats)</code>
   </views>
   <instances>
     <instance objName="oPlayer" x="256" y="336" name="inst_C8354BCB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oEnemySpawner" x="240" y="16" name="inst_145A1F5F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oWave1" x="240" y="48" name="inst_1BC4FADB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

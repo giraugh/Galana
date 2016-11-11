@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>oTextFadeIn</parentName>
+  <parentName>oEnemySpawner</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -39,27 +39,23 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///More Init
+            <string>///Init
 
-//---------------------
+//-------------
 
-//where to?
-slide_to = 64 + 32
+//Wave Info
+wave_number = 1
+wave_enemy_count = WAVE_COUNT_1
 
-//wait time before sliding
-slide_wait = .5 * room_speed
+//Boss
+boss_to_spawn = noone
+boss_spawn_loc_x = room_width/2
+boss_spawn_loc_y = 128
 
-//slide yet?
-do_slide = false
+//-------------
 
-//how fast? (lrp)
-slide_speed = .15
-
-
-//---------------------
-
-//set timer
-alarm[0] = slide_wait
+//Amount spawned
+spawned_count = 0
 </string>
           </argument>
         </arguments>
@@ -68,6 +64,20 @@ alarm[0] = slide_wait
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -82,8 +92,8 @@ alarm[0] = slide_wait
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Slide Up
-do_slide = true
+            <string>///Increment spawned count
+spawned_count++
 </string>
           </argument>
         </arguments>
@@ -92,17 +102,36 @@ do_slide = true
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Are we done?
+
+//finished spawning
+if (spawned_count &gt;= wave_enemy_count) {
+    //stop spawning
+    spawn_delay = 99999999999
+    
+    //no one still alive?
+    if (instance_number(oEnemy) == 0) {
+        //kill us and spawn boss
+        scrWaveFinished()
+    }
+}
+</string>
+          </argument>
+        </arguments>
       </action>
       <action>
         <libid>1</libid>
@@ -120,29 +149,11 @@ do_slide = true
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Slide if we should
-if (do_slide) {
-    y = lerp(y, slide_to, slide_speed)
-}
+            <string>///Set Title
+window_set_caption(string(spawned_count) + "/" + string(wave_enemy_count))
 </string>
           </argument>
         </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
       </action>
     </event>
   </events>

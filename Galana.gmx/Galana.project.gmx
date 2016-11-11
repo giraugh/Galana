@@ -47,6 +47,7 @@
     <scripts name="actions">
       <script>scripts\scrTakeDamage.gml</script>
       <script>scripts\scrGetDissipated.gml</script>
+      <script>scripts\scrWaveFinished.gml</script>
     </scripts>
     <scripts name="tweens">
       <script>scripts\ease_out_sine.gml</script>
@@ -123,7 +124,11 @@
       <object>objects\oCamera</object>
       <object>objects\oDevCheats</object>
     </objects>
+    <objects name="Waves">
+      <object>objects\oWave1</object>
+    </objects>
   </objects>
+  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
     <room>rooms\DEAD</room>
