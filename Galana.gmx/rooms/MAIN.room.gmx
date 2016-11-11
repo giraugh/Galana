@@ -10,7 +10,10 @@
   <persistent>0</persistent>
   <colour>16777215</colour>
   <showcolour>-1</showcolour>
-  <code>//Create camera
+  <code>//Randomize seed
+randomize()
+
+//Create camera
 instance_create(0, 0, oCamera)
 
 //create dev cheats
