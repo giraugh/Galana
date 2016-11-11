@@ -101,14 +101,19 @@
       <object>objects\oEnemyFire</object>
     </objects>
     <objects name="FX">
-      <object>objects\oExplosion</object>
-      <object>objects\oDissipatedBullet</object>
-      <object>objects\pFadeOut</object>
-      <object>objects\oCameraFlash</object>
-      <object>objects\oCircleFade</object>
-      <object>objects\oTextFadeIn</object>
-      <object>objects\oSticks</object>
-      <object>objects\oInvinciBeam</object>
+      <objects name="DeadScreen">
+        <object>objects\oTextFadeIn</object>
+        <object>objects\oTextFadeInSlideUp</object>
+      </objects>
+      <objects name="GameScreen">
+        <object>objects\oCircleFade</object>
+        <object>objects\oDissipatedBullet</object>
+        <object>objects\oExplosion</object>
+        <object>objects\oSticks</object>
+        <object>objects\pFadeOut</object>
+        <object>objects\oCameraFlash</object>
+        <object>objects\oInvinciBeam</object>
+      </objects>
     </objects>
     <objects name="Spawners">
       <object>objects\pSpawner</object>
