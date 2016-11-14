@@ -86,6 +86,10 @@
       <script>scripts\scrCenterText.gml</script>
       <script>scripts\scrUncenterText.gml</script>
     </scripts>
+    <scripts name="helperSE">
+      <script>scripts\choose_array.gml</script>
+      <script>scripts\array_get_second_dimension.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fCoinyTitle</font>
@@ -123,12 +127,15 @@
     <objects name="Meta">
       <object>objects\oCamera</object>
       <object>objects\oDevCheats</object>
+      <object>objects\oGlobalDefinitions</object>
     </objects>
     <objects name="Waves">
       <object>objects\oWave1</object>
+      <object>objects\oWave2</object>
+      <object>objects\oWave3</object>
+      <object>objects\pWave</object>
     </objects>
   </objects>
-  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
     <room>rooms\DEAD</room>

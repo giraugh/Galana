@@ -649,16 +649,13 @@
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants>
-    <constants number="9">
+    <constants number="6">
       <constant name="TEAM_FRIENDLY">0</constant>
       <constant name="TEAM_ENEMY">1</constant>
       <constant name="COL_ENEMY_LIGHT">make_colour_rgb(172, 50, 50)</constant>
       <constant name="COL_ENEMY_DARK">make_colour_rgb(151, 42, 42)</constant>
       <constant name="COL_ENEMY_PURPLE_LIGHT">make_colour_rgb(118, 66, 138)</constant>
       <constant name="COL_ENEMY_PURPLE_DARK">make_colour_rgb(96, 45, 116)</constant>
-      <constant name="WAVE_COUNT_1">30</constant>
-      <constant name="WAVE_COUNT_2">50</constant>
-      <constant name="WAVE_COUNT_3">80</constant>
     </constants>
   </ConfigConstants>
 </Config>

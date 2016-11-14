@@ -13,7 +13,9 @@ switch (argument0) {
         obj.x = random(room_width-32)+32
         
         //random type
-        obj.type = irandom_range(0, array_length_1d(obj.types)-1)
+        if (can_spawn != undefined) {
+            obj.type = choose_array(can_spawn)
+        } else {show_debug_message(object_get_name(object_index) + ": can_spawn IS UNDEFINED")}
         
         //dont spawn more than one "type 4" enemy
         if (obj.type == 3 and scrGetEnemyCount(3) > 1) {

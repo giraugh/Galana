@@ -5,24 +5,10 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>pSpawner</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -39,19 +25,32 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialize
+            <string>///Define some globals
 
-//Object
-spawn_object = oEnemy
+// --- Wave Enemy Counts ---
+globalvar waveCounts;
+waveCounts[0] = 30
+waveCounts[1] = 50
+waveCounts[2] = 80
 
-//Spawn Types
-can_spawn = undefined
+// --- Wave Enemy Types ---
+globalvar waveTypes;
 
-//Timing
-spawn_delay = 1 * room_speed
+//wave 1
+waveTypes[0, 0] = 1
+waveTypes[0, 1] = 2
 
-//Callback
-spawn_callback = "enemy"
+//wave 2
+waveTypes[1, 0] = 0
+waveTypes[1, 1] = 1
+waveTypes[1, 2] = 2
+
+//wave 3
+waveTypes[2, 0] = 0
+waveTypes[2, 1] = 1
+waveTypes[2, 2] = 2
+waveTypes[2, 3] = 3
+
 </string>
           </argument>
         </arguments>
