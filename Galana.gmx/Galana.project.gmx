@@ -97,6 +97,7 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\fCoinyTitle</font>
+    <font>fonts\fCoinyGame</font>
   </fonts>
   <objects name="objects">
     <objects name="Player">
@@ -122,6 +123,7 @@
         <object>objects\pFadeOut</object>
         <object>objects\oCameraFlash</object>
         <object>objects\oInvinciBeam</object>
+        <object>objects\oWaveCompleted</object>
       </objects>
     </objects>
     <objects name="Spawners">

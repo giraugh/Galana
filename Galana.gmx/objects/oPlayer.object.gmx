@@ -529,15 +529,14 @@ if (keyboard_check(key_shoot)){
             <kind>1</kind>
             <string>///Draw health circle
 
-
 //get stats
 var totalSegments = m_hth
 var currentSegments = hth
-var col = make_colour_rgb(99, 155, 255)
+var col = COL_FRIENDLY_DARK
 
 //should it flash?
 if (totalSegments == currentSegments and current_time % 4 == 0) {
-    col = make_colour_rgb(76, 123, 207)
+    col = COL_FRIENDLY_LIGHT
 }
 
 scrDrawHealthRing(x, y, 16, 8, totalSegments, currentSegments, 0, 360, 1, col)
