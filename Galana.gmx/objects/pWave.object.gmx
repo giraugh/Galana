@@ -55,9 +55,11 @@ boss_spawn_loc_x = room_width/2
 boss_spawn_loc_y = 128
 
 //Continuation
-wave_next = oWave2
+wave_next_timer = 0
+wave_next_delay = 300 * (room_speed / 100)
 
 //wave bar
+bar_pos_speed = .2
 bar_colour = COL_FRIENDLY_DARK
 bar_edge_offset = 16
 bar_height = 10
@@ -136,8 +138,21 @@ if (spawned_count &gt;= wave_enemy_count) {
     
     //no one still alive?
     if (instance_number(oEnemy) == 0) {
-        //kill us and spawn boss
-        scrWaveFinished()
+        //first timer step
+        if (wave_next_timer == 0) {
+            //show wave completed text
+            var text = instance_create(room_width/2, room_height/2, oWaveCompleted);
+            text.text_content = "Wave " + string(wave_number) + " Completed"
+        }
+        
+        //increase timer
+        wave_next_timer++
+
+        //timer done?
+        if (wave_next_timer &gt;= wave_next_delay) {
+            //kill us and spawn boss
+            scrWaveFinished()
+        }
     }
 }
 </string>
@@ -164,11 +179,14 @@ if (spawned_count &gt;= wave_enemy_count) {
             <kind>1</kind>
             <string>///Draw Wave Bar
 
-//how filled is the bar?
-var percent = spawned_count / wave_enemy_count
+//how filled should the bar be?
+var to_percent = min(spawned_count / wave_enemy_count, 1)
+
+//interpolate
+global.bar_cur_pos = lerp(global.bar_cur_pos, to_percent, bar_pos_speed)
 
 //how long will it be?
-var length = percent * (room_width - (2 * bar_edge_offset))
+var length = global.bar_cur_pos * (room_width - (2 * bar_edge_offset))
 
 //calculate positions
 var x1 = bar_edge_offset
