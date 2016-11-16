@@ -16,9 +16,13 @@
     </sprites>
     <sprites name="Enemies">
       <sprite>sprites\sEnemy_Fire_1</sprite>
+      <sprite>sprites\sEnemy_Fire_2</sprite>
+      <sprite>sprites\sEnemy_Fire_3</sprite>
       <sprite>sprites\sEnemy_Fire_4</sprite>
       <sprite>sprites\sEnemy_1</sprite>
       <sprite>sprites\sEnemy_2</sprite>
+      <sprite>sprites\sEnemy_2_transform</sprite>
+      <sprite>sprites\sEnemy_2_dive</sprite>
       <sprite>sprites\sEnemy_3</sprite>
       <sprite>sprites\sEnemy_4</sprite>
       <sprite>sprites\sEnemy_Bullet</sprite>

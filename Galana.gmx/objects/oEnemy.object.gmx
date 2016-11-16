@@ -36,9 +36,13 @@ type = 1
 
 //Fire Types
 ftypes[0] = sEnemy_Fire_1
-ftypes[1] = -1
-ftypes[2] = -1
+ftypes[1] = sEnemy_Fire_2
+ftypes[2] = sEnemy_Fire_3
 ftypes[3] = sEnemy_Fire_4
+
+//Sprite Override
+s_override = false
+s_over = undefined
 
 //State Control
 state = "default"
@@ -64,6 +68,8 @@ bullet_timer = 0; m_bullet_timer = 10
 dive_distance = 64
 dive_speed = 8
 dive_give_up = 2*room_speed
+dive_transform_sprite = sEnemy_2_transform
+dive_sprite = sEnemy_2_dive
 
 //prefered height
 pref_speed = .2
@@ -95,6 +101,7 @@ beam_width = 5
 fire = instance_create(x, y, oEnemyFire)
 fire.stick_to = id
 fire.ftypes = ftypes
+fire_enabled = true
 </string>
           </argument>
         </arguments>
@@ -395,8 +402,16 @@ image_alpha = 1
             <kind>1</kind>
             <string>///Draw Correct Type
 
+//get sprite to draw
+var spr = types[type]
+
+//should it be overriden? (i.e diving)
+if (s_override) {
+    spr = s_over
+}
+
 //draw type
-draw_sprite_ext(types[type], image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
+draw_sprite_ext(spr, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
 </string>
           </argument>
         </arguments>
