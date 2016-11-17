@@ -5,43 +5,24 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>oTextFadeIn</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>604</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Initialize
-
-//text
-text_content = "NO TEXT SET"
-text_font = fCoinyTitle
-text_colour = c_white
-
-//fading
-wait_time = 0
-fade_time = 400
-start_time = current_time
-</string>
-          </argument>
-        </arguments>
       </action>
-    </event>
-    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -58,28 +39,77 @@ start_time = current_time
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw Text
+            <string>///Set text to 0
+text_content = "0"
+text_num = 0
+text_num_speed = .05
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Wait 
+wait_time = 900
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Increase Score Display
 
-//done waiting?
+//finished waiting?
 if (current_time - start_time &gt; wait_time) {
+    //lerp
+    text_num = lerp(text_num, score, text_num_speed)
     
-    //set font
-    draw_set_font(text_font)
-    
-    //set colour
-    draw_set_colour(text_colour)
-    
-    //set alpha
-    draw_set_alpha(((current_time - start_time) - wait_time) / fade_time)
-    
-    //center text
-    scrCenterText()
-    
-    //draw text content
-    draw_text(x, y, text_content)
-    
-    //uncenter text
-    scrUncenterText()
+    //set text
+    text_content = real(round(text_num))
 }
 </string>
           </argument>

@@ -223,6 +223,7 @@ if (!instance_exists(oPlayer)) {
 
 if (x &gt; room_width or x &lt; 0 or y &gt; room_height) {
     instance_destroy()
+    scrGiveScore(5)
 }
 </string>
           </argument>
@@ -351,6 +352,7 @@ if (not is_invincible) {
         //shake &amp; bake!
         scrCameraShake(shake_amount, shake_amount)
         
+        scrGiveScore(10)
     }
 }
 </string>

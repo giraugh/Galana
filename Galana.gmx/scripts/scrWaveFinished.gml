@@ -3,6 +3,9 @@
 //destroy us
 instance_destroy()
 
+//give score
+scrGiveScore(50)
+
 //do we have a boss to spawn?
 if (boss_to_spawn != noone) {
     //spawn boss

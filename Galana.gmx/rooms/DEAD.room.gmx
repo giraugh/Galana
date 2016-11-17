@@ -53,6 +53,8 @@ instance_create(0, 0, oCamera)</code>
   </views>
   <instances>
     <instance objName="oTextFadeInSlideUp" x="512" y="416" name="inst_7B9BA88A" locked="0" code="///set text&#xA;text_content = &quot;You're Dead Mate&quot;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oScoreDisplay" x="512" y="224" name="inst_6FE9148E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDeadControl" x="0" y="0" name="inst_1F19D303" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

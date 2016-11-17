@@ -26,8 +26,9 @@ if (instance_exists(attack_target)) {
         //Second Type ------------------------------------------------------------------------------------------------------------------
         //Slowly move towards x whilst moving down
         case 1:
-            x = lerp(x, p.x + attack_offset, attack_speed)
-            y += 3
+            dir = point_direction(x, y, p.x, p.y + 16)
+            x += lengthdir_x(3, dir)
+            y += max(3, lengthdir_y(3, dir))
         break
     
         //Third Type --------------------------------------------------------------------------------------------------------------------

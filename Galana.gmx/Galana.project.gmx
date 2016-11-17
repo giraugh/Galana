@@ -41,6 +41,7 @@
       <script>scripts\scrGameFreeze.gml</script>
       <script>scripts\scrGetEnemyCount.gml</script>
       <script>scripts\scrCreateBeam.gml</script>
+      <script>scripts\scrGiveScore.gml</script>
     </scripts>
     <scripts name="callbacks">
       <script>scripts\cbkJustSpawned.gml</script>
@@ -114,6 +115,7 @@
       <objects name="DeadScreen">
         <object>objects\oTextFadeIn</object>
         <object>objects\oTextFadeInSlideUp</object>
+        <object>objects\oScoreDisplay</object>
       </objects>
       <objects name="GameScreen">
         <object>objects\oCircleFade</object>
@@ -134,6 +136,7 @@
       <object>objects\oCamera</object>
       <object>objects\oDevCheats</object>
       <object>objects\oGlobalDefinitions</object>
+      <object>objects\oDeadControl</object>
     </objects>
     <objects name="Waves">
       <object>objects\oWave1</object>
