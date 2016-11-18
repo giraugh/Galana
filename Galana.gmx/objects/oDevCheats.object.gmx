@@ -29,6 +29,7 @@
 
 //player can't die
 global.DEV_INVINCIBLE = false
+global.DEV_CAN_SKIP = true
 </string>
           </argument>
         </arguments>

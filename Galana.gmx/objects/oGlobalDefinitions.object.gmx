@@ -54,6 +54,13 @@ waveTypes[2, 1] = 1
 waveTypes[2, 2] = 2
 waveTypes[2, 3] = 3
 
+// --- Extra Health Chance ---
+globalvar ehChance;
+ehChance[0] = .04
+ehChance[1] = .04
+ehChance[2] = .03
+ehChance[3] = .02
+
 </string>
           </argument>
         </arguments>
