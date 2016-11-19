@@ -109,5 +109,28 @@ if (instance_exists(attack_target)) {
             
         break
         
+        //Fifth Type ------------------------------------------------------------------------------------------------------------------------
+        //Travels across screen whilst shooting down
+        case 4:
+            //first time jump to left
+            if (state == "default") {
+                state = "move"
+                x = 0
+            } else {
+            
+                //go to preferred height------------------
+                y = lerp(y, pref_height, pref_speed)
+            
+                //avoid x----------------------------
+                x += 2
+                
+                //shoot-----------------------------
+                scrShoot(1, oBulletEnemy)
+                
+                //increase timer
+                bullet_timer++
+            }
+        break
+        
     }
 }

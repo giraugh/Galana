@@ -32,27 +32,33 @@ global.bar_cur_pos = 0
 
 // --- Wave Enemy Counts ---
 globalvar waveCounts;
-waveCounts[0] = 30
-waveCounts[1] = 50
-waveCounts[2] = 80
+waveCounts[0] = 20
+waveCounts[1] = 40
+waveCounts[2] = 60
+waveCounts[3] = 65
 
 // --- Wave Enemy Types ---
 globalvar waveTypes;
 
-//wave 1
+//wave 1 (melee)
 waveTypes[0, 0] = 1
 waveTypes[0, 1] = 2
 
-//wave 2
+//wave 2 (add shooting)
 waveTypes[1, 0] = 0
 waveTypes[1, 1] = 1
 waveTypes[1, 2] = 2
 
-//wave 3
+//wave 3 (add shielder)
 waveTypes[2, 0] = 0
 waveTypes[2, 1] = 1
 waveTypes[2, 2] = 2
 waveTypes[2, 3] = 3
+
+//wave 4 (add crossers)
+waveTypes[3, 0] = 2
+waveTypes[3, 1] = 4
+waveTypes[3, 2] = 3
 
 // --- Extra Health Chance ---
 globalvar ehChance;
@@ -60,6 +66,7 @@ ehChance[0] = .04
 ehChance[1] = .04
 ehChance[2] = .03
 ehChance[3] = .02
+ehChance[4] = .02
 
 </string>
           </argument>

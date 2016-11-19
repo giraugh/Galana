@@ -21,8 +21,8 @@
       <sprite>sprites\sEnemy_Fire_4</sprite>
       <sprite>sprites\sEnemy_1</sprite>
       <sprite>sprites\sEnemy_2</sprite>
-      <sprite>sprites\sEnemy_2_transform</sprite>
-      <sprite>sprites\sEnemy_2_dive</sprite>
+      <sprite>sprites\sEnemy_3_transform</sprite>
+      <sprite>sprites\sEnemy_3_dive</sprite>
       <sprite>sprites\sEnemy_3</sprite>
       <sprite>sprites\sEnemy_4</sprite>
       <sprite>sprites\sEnemy_Bullet</sprite>
@@ -42,6 +42,7 @@
       <script>scripts\scrGetEnemyCount.gml</script>
       <script>scripts\scrCreateBeam.gml</script>
       <script>scripts\scrGiveScore.gml</script>
+      <script>scripts\scrShootAngle.gml</script>
     </scripts>
     <scripts name="callbacks">
       <script>scripts\cbkJustSpawned.gml</script>
@@ -142,6 +143,7 @@
       <object>objects\oWave1</object>
       <object>objects\oWave2</object>
       <object>objects\oWave3</object>
+      <object>objects\oWave4</object>
       <object>objects\pWave</object>
     </objects>
   </objects>

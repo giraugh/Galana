@@ -28,7 +28,7 @@
             <string>///Init
 
 //Wave Info
-wave_number = 3
+wave_number = 4
 
 //Continuation
 wave_next = oWave4

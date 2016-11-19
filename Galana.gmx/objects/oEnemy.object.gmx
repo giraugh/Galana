@@ -32,6 +32,7 @@ types[0] = sEnemy_1
 types[1] = sEnemy_2
 types[2] = sEnemy_3
 types[3] = sEnemy_4
+types[4] = sEnemy_3
 type = 1
 
 //Fire Types
@@ -39,6 +40,7 @@ ftypes[0] = sEnemy_Fire_1
 ftypes[1] = sEnemy_Fire_2
 ftypes[2] = sEnemy_Fire_3
 ftypes[3] = sEnemy_Fire_4
+ftypes[4] = sEnemy_Fire_3
 
 //Sprite Override
 s_override = false
@@ -69,8 +71,8 @@ bullet_timer = 0; m_bullet_timer = 10
 dive_distance = 64
 dive_speed = 8
 dive_give_up = 2*room_speed
-dive_transform_sprite = sEnemy_2_transform
-dive_sprite = sEnemy_2_dive
+dive_transform_sprite = sEnemy_3_transform
+dive_sprite = sEnemy_3_dive
 
 //prefered height
 pref_speed = .2
