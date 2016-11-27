@@ -29,6 +29,9 @@
       <sprite>sprites\sEnemy_Bullet_Dissipate</sprite>
     </sprites>
     <sprite>sprites\sExplosion</sprite>
+    <sprites name="Bosses">
+      <sprite>sprites\sBoss1</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -97,6 +100,9 @@
       <script>scripts\array_get_second_dimension.gml</script>
     </scripts>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\sWhiteOnly.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\fCoinyTitle</font>
     <font>fonts\fCoinyGame</font>
@@ -145,6 +151,10 @@
       <object>objects\oWave3</object>
       <object>objects\oWave4</object>
       <object>objects\pWave</object>
+    </objects>
+    <objects name="Bosses">
+      <object>objects\pBoss</object>
+      <object>objects\oBoss1</object>
     </objects>
   </objects>
   <rooms name="rooms">

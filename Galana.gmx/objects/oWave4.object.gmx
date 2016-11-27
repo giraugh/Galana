@@ -30,6 +30,9 @@
 //Wave Info
 wave_number = 4
 
+//Boss
+boss_to_spawn = noone
+
 //Continuation
 wave_next = oWave4
 </string>
