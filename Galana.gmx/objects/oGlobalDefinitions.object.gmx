@@ -29,6 +29,7 @@
 
 // --- Stuff shared Between Instances ---
 global.bar_cur_pos = 0
+global.bar_cur_col = COL_FRIENDLY_LIGHT
 
 // --- Wave Enemy Counts ---
 globalvar waveCounts;

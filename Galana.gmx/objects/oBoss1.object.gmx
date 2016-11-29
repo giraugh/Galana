@@ -47,7 +47,34 @@ pref_height_spd = .05
 
 //camera shake
 shake_amount = 5
+camera_shake_death = 20
 
+//Shooting  (T1)
+bullet_offset_x = 0
+bullet_offset_y = 185 / 2
+bullet_speed = 7
+bullet_which = -1
+bullet_timer = 0; m_bullet_timer = 3
+
+//attack
+attack_timer = 0
+attack_target = oPlayer
+
+//attack speed
+attack_speed_default = .05
+attack_speed_shoot = .2
+attack_speed_spawn = .1
+
+//      -states
+attack_state = "default"
+
+timer_default = room_speed * 3
+timer_shoot = room_speed * 2
+timer_spawn = room_speed * 4
+
+//          -spawning
+spawn_timer = 0
+spawn_delay = room_speed * .25
 </string>
           </argument>
         </arguments>
@@ -90,6 +117,28 @@ y = lerp(y, pref_height, pref_height_spd)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Do AI Routine
+scrBossAI_1()
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="oBullet">
       <action>
@@ -126,6 +175,53 @@ if (other.team != team) {
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///flash tells
+
+//reset image blend
+image_blend = c_white
+
+//flash before shooting
+if (attack_state == "default" and attack_timer &gt; (timer_default - 20)) {
+    if ((current_time/2) % 2 == 0) {
+        image_blend = COL_ENEMY_LIGHT
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
   </events>

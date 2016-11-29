@@ -31,6 +31,8 @@
     <sprite>sprites\sExplosion</sprite>
     <sprites name="Bosses">
       <sprite>sprites\sBoss1</sprite>
+      <sprite>sprites\sBoss_Bullet</sprite>
+      <sprite>sprites\sBoss_Bullet_Dissipate</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
@@ -39,7 +41,6 @@
     <scripts name="scripts">
       <script>scripts\scrCameraShake.gml</script>
       <script>scripts\scrShoot.gml</script>
-      <script>scripts\scrEnemyAI.gml</script>
       <script>scripts\scrCameraFlash.gml</script>
       <script>scripts\scrGameFreeze.gml</script>
       <script>scripts\scrGetEnemyCount.gml</script>
@@ -98,6 +99,11 @@
     <scripts name="helperSE">
       <script>scripts\choose_array.gml</script>
       <script>scripts\array_get_second_dimension.gml</script>
+      <script>scripts\lerp_col.gml</script>
+    </scripts>
+    <scripts name="AI routines">
+      <script>scripts\scrEnemyAI.gml</script>
+      <script>scripts\scrBossAI_1.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -116,6 +122,7 @@
     <objects name="Enemy">
       <object>objects\oEnemy</object>
       <object>objects\oBulletEnemy</object>
+      <object>objects\oBulletBoss</object>
       <object>objects\oEnemyFire</object>
     </objects>
     <objects name="FX">
