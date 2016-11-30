@@ -5,10 +5,24 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>pBoss</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,30 +39,42 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Boss Generic Init
+            <string>///Init
 
-//Continuation
-wave_next = noone
+//pref height
+pref_height = 90
+pref_height_spd = .05
 
 //camera shake
+shake_amount = 5
 camera_shake_death = 20
 
-//Stats
-hth_max = 100
-hth = hth_max
+//Shooting  (T1)
+bullet_offset_x = 0
+bullet_offset_y = 185 / 2
+bullet_speed = 7
+bullet_which = -1
+bullet_timer = 0; m_bullet_timer = 3
 
-//wave bar
-bar_pos_speed = .2
-bar_colour = COL_ENEMY_LIGHT
-bar_edge_offset = 16
-bar_height = 10
-bar_bottom_offset = 10
+//attack
+attack_timer = 0
+attack_target = oPlayer
 
-//image fx
-flash_white = false
+//attack speed
+attack_speed_default = .05
+attack_speed_shoot = .2
+attack_speed_spawn = .1
 
-//team
-team = TEAM_ENEMY
+//      -states
+attack_state = "default"
+
+timer_default = room_speed * 3
+timer_shoot = room_speed * 2
+timer_spawn = room_speed * 4
+
+//          -spawning
+spawn_timer = 0
+spawn_delay = room_speed * .25
 </string>
           </argument>
         </arguments>
@@ -57,6 +83,20 @@ team = TEAM_ENEMY
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -71,20 +111,8 @@ team = TEAM_ENEMY
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Am I Dead?
-
-if (hth &lt;= 0) {
-    /* NICE EFFECTS */
-    
-    //shake &amp; bake!
-    scrCameraShake(camera_shake_death, camera_shake_death)
-    
-    //destroy me
-    instance_destroy()
-    
-    //spawn next wave
-    instance_create(0, 0, wave_next)
-}
+            <string>///Go To Pref Height
+y = lerp(y, pref_height, pref_height_spd)
 </string>
           </argument>
         </arguments>
@@ -105,47 +133,8 @@ if (hth &lt;= 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///(DEV) Skip Boss
-if (global.DEV_CAN_SKIP and keyboard_check_pressed(vk_f1)) {
-    hth = -1
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="oBullet">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Take Damage
-
-if (other.team != team) {
-        //take damage
-        hth--
-        
-        //flash white
-        flash_white = true
-        
-        //kill them
-        with (other) {instance_destroy()}
-
-        //shake &amp;amp; bake!
-        scrCameraShake(shake_amount, shake_amount)
-    }
+            <string>///Do AI Routine
+scrBossAI_1()
 </string>
           </argument>
         </arguments>
@@ -168,66 +157,34 @@ if (other.team != team) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw Wave Bar
+            <string>///flash tells
 
-//how filled should the bar be?
-var to_percent = min(hth / hth_max, 1)
+//reset image blend
+image_blend = c_white
 
-//interpolate position
-global.bar_cur_pos = lerp(global.bar_cur_pos, to_percent, bar_pos_speed)
-
-//interpolate colour
-global.bar_cur_col = lerp_col(global.bar_cur_col, bar_colour, .2)
-
-//how long will it be?  
-var length = global.bar_cur_pos * (room_width - (2 * bar_edge_offset))
-
-//calculate positions
-var x1 = bar_edge_offset
-var x2 = x1 + length
-var y1 = room_height - (bar_bottom_offset + bar_height)
-var y2 = room_height - bar_bottom_offset
-
-//set colour and draw w/o outlined
-draw_set_colour(global.bar_cur_col)
-draw_rectangle(x1, y1, x2, y2, false)
+//flash before shooting
+if (attack_state == "default" and attack_timer &gt; (timer_default - 30)) {
+    if ((current_time/2) % 2 == 0) {
+        image_blend = COL_ENEMY_DARK
+    }
+}
 </string>
           </argument>
         </arguments>
       </action>
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>604</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw Self
-
-//flash white?
-if (flash_white) {
-    flash_white = false
-    shader_set(sWhiteOnly)
-}
-
-//Draw Self
-draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
-
-
-//Reset Shader
-shader_reset()
-</string>
-          </argument>
-        </arguments>
       </action>
     </event>
   </events>

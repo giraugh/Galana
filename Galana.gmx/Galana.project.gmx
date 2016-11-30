@@ -31,6 +31,7 @@
     <sprite>sprites\sExplosion</sprite>
     <sprites name="Bosses">
       <sprite>sprites\sBoss1</sprite>
+      <sprite>sprites\sBoss2</sprite>
       <sprite>sprites\sBoss_Bullet</sprite>
       <sprite>sprites\sBoss_Bullet_Dissipate</sprite>
     </sprites>
@@ -104,6 +105,7 @@
     <scripts name="AI routines">
       <script>scripts\scrEnemyAI.gml</script>
       <script>scripts\scrBossAI_1.gml</script>
+      <script>scripts\scrBossAI_2.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -161,6 +163,7 @@
     </objects>
     <objects name="Bosses">
       <object>objects\pBoss</object>
+      <object>objects\oBoss2</object>
       <object>objects\oBoss1</object>
     </objects>
   </objects>

@@ -31,7 +31,7 @@
 wave_number = 4
 
 //Boss
-boss_to_spawn = noone
+boss_to_spawn = oBoss2
 
 //Continuation
 wave_next = oWave4
