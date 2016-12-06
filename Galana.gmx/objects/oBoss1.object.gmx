@@ -61,6 +61,7 @@ dive_speed = 20
 attack_timer = 0
 
 timer_default = room_speed * 3
+timer_wait = room_speed * .15
 
 //am i colliding?
 colliding = false
@@ -101,7 +102,7 @@ colliding = false
           <argument>
             <kind>1</kind>
             <string>///Do Ai Routine
-scrBossAI_2()
+scrBossAI_1()
 </string>
           </argument>
         </arguments>

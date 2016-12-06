@@ -232,7 +232,8 @@ image_angle = lerp(image_angle, vrotate_angle * -hsp/(m_hsp), vrotate_speed)
 //shoot in facing direction
 if (keyboard_check(key_shoot)) {
     //do we have bullets left?
-    if (chamber_amount &lt; m_chamber_amount and !chamber_reset) {
+    if (chamber_amount &lt; m_chamber_amount and !chamber_reset) {    
+        //Shoot
         scrShoot(-1, oBullet)
         chamber_amount++
     } else {
@@ -278,6 +279,9 @@ bullet_timer++
             <string>///Are We Dead?
 if (hth &lt;= 0 and !global.DEV_INVINCIBLE) {
     instance_destroy()
+    
+    //Audio
+    scrPlaySound(player_death)
     
     //create fade out object
     instance_create(0, 0, oCircleFade)
@@ -478,6 +482,28 @@ scrCameraShake(shake_amount, shake_amount)
             <string>///Screen Flash
 
 scrCameraFlash()
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Audio
+scrPlaySound(player_hit)
 </string>
           </argument>
         </arguments>

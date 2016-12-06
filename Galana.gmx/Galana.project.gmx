@@ -6,7 +6,18 @@
   <NewExtensions>
     <extension index="0">extensions\Easing and Tweening</extension>
   </NewExtensions>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sounds name="player">
+      <sound>sound\player_hit</sound>
+      <sound>sound\player_death</sound>
+      <sound>sound\player_shoot</sound>
+    </sounds>
+    <sounds name="enemy">
+      <sound>sound\enemy_hit</sound>
+      <sound>sound\enemy_hit_block</sound>
+      <sound>sound\enemy_shoot</sound>
+    </sounds>
+  </sounds>
   <sprites name="sprites">
     <sprites name="Player">
       <sprite>sprites\sPlayer_Shooting</sprite>
@@ -96,6 +107,7 @@
     <scripts name="helpers">
       <script>scripts\scrCenterText.gml</script>
       <script>scripts\scrUncenterText.gml</script>
+      <script>scripts\scrPlaySound.gml</script>
     </scripts>
     <scripts name="helperSE">
       <script>scripts\choose_array.gml</script>
@@ -104,8 +116,8 @@
     </scripts>
     <scripts name="AI routines">
       <script>scripts\scrEnemyAI.gml</script>
-      <script>scripts\scrBossAI_1.gml</script>
       <script>scripts\scrBossAI_2.gml</script>
+      <script>scripts\scrBossAI_1.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">

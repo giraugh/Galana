@@ -377,6 +377,9 @@ if (not is_invincible) {
         
         //are we dead?
         if (hth &lt;= 0) {
+            //audio
+            scrPlaySound(enemy_hit)
+        
             //explode
             instance_create(x, y, oExplosion)
             
@@ -385,6 +388,9 @@ if (not is_invincible) {
         
             //award score    
             scrGiveScore(10)
+        } else {
+            //block audio
+            scrPlaySound(enemy_hit_block)
         }
     }
 }

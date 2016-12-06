@@ -2,6 +2,11 @@
 if (bullet_timer >= m_bullet_timer) {
         //reset timer
         bullet_timer = 0
+        
+        //enemy audio (if enemy)
+        if (argument0 == 1) {
+            scrPlaySound(enemy_shoot)
+        }   
     
         //shoot from the right side
         var xoff = bullet_offset_x * bullet_which
@@ -18,4 +23,4 @@ if (bullet_timer >= m_bullet_timer) {
         
         //switch side
         bullet_which *= -1
-    }
+}

@@ -1,4 +1,4 @@
-///scrBossAI_1()
+///scrBossAI_2()
 
 p = instance_nearest(x, y, attack_target)
 
@@ -41,9 +41,6 @@ switch (attack_state) {
             attack_timer = 0
             attack_state = "dive"
         }
-        
-        //Float back
-        y -= 2
     break
     
     case "return":

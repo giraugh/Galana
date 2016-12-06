@@ -134,7 +134,7 @@ y = lerp(y, pref_height, pref_height_spd)
           <argument>
             <kind>1</kind>
             <string>///Do AI Routine
-scrBossAI_1()
+scrBossAI_2()
 </string>
           </argument>
         </arguments>
