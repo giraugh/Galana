@@ -99,6 +99,19 @@ fire.stick_to = id
 //get input
 var hi = keyboard_check(key_right) - keyboard_check(key_left)
 
+//mobile inputs
+if (scrIsMobile()) {
+    //relative
+    if (scrMobileInputType() == "relative") {
+        hi = scrMobileInputGetAccX()
+    }
+    
+    //absolute
+    if (scrMobileInputType() == "absolute") {
+        x = lerp(x, ((scrMobileInputGetAccX() + 1) / 2 ) * (room_width), .2)
+    }
+}
+
 //apply it
 hsp = hsp + hi*spd
 </string>
@@ -230,7 +243,7 @@ image_angle = lerp(image_angle, vrotate_angle * -hsp/(m_hsp), vrotate_speed)
             <string>///Shooting
 
 //shoot in facing direction
-if (keyboard_check(key_shoot)) {
+if (keyboard_check(key_shoot) or mouse_check_button(mb_left)) {
     //do we have bullets left?
     if (chamber_amount &lt; m_chamber_amount and !chamber_reset) {    
         //Shoot

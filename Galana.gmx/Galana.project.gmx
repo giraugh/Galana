@@ -119,6 +119,12 @@
       <script>scripts\scrBossAI_2.gml</script>
       <script>scripts\scrBossAI_1.gml</script>
     </scripts>
+    <scripts name="mobile">
+      <script>scripts\scrMobileInputType.gml</script>
+      <script>scripts\scrIsMobile.gml</script>
+      <script>scripts\scrMobileInputSens.gml</script>
+      <script>scripts\scrMobileInputGetAccX.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sWhiteOnly.shader</shader>

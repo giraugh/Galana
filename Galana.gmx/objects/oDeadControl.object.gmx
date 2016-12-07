@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Restart game on SPACE (PLACEHOLDER)
-if (keyboard_check_pressed(vk_space)) {
+            <string>///Restart game on SPACE (or mouse)(PLACEHOLDER)
+if (keyboard_check_pressed(vk_space) or mouse_check_button_pressed(mb_left)) {
     game_restart()
 }
 </string>
