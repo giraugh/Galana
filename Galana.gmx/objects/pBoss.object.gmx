@@ -30,9 +30,6 @@
 //Continuation
 wave_next = noone
 
-//camera shake
-camera_shake_death = 20
-
 //Stats
 hth_max = 100
 hth = hth_max
@@ -74,16 +71,14 @@ team = TEAM_ENEMY
             <string>///Am I Dead?
 
 if (hth &lt;= 0) {
-    /* NICE EFFECTS */
-    
-    //shake &amp; bake!
-    scrCameraShake(camera_shake_death, camera_shake_death)
+    //Spawn dead boss
+    with (instance_create(x, y, oDeadBoss)) {
+        sprite_index = other.sprite_index
+        wave_next = other.wave_next
+    }
     
     //destroy me
     instance_destroy()
-    
-    //spawn next wave
-    instance_create(0, 0, wave_next)
 }
 </string>
           </argument>

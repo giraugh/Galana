@@ -27,6 +27,10 @@
             <kind>1</kind>
             <string>///Define some globals
 
+// --- Pausing Stuff ---
+global.RoomBeforePause = -1
+global.PauseScreenShot = undefined
+
 // --- Stuff shared Between Instances ---
 global.bar_cur_pos = 0
 global.bar_cur_col = COL_FRIENDLY_LIGHT
@@ -73,6 +77,37 @@ ehChance[1] = .04
 ehChance[2] = .03
 ehChance[3] = .02
 ehChance[4] = .02
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Check Settings &amp; Inputs
+
+/* INPUTS */
+//does it exist?
+if (!file_exists("inputs.ini")) {
+    scrCreateDefaultInputsFile()
+}
+
+//load it (stores in global.Inputs)
+scrLoadInputsFile()
 
 </string>
           </argument>

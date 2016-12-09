@@ -39,12 +39,16 @@
       <sprite>sprites\sEnemy_Bullet</sprite>
       <sprite>sprites\sEnemy_Bullet_Dissipate</sprite>
     </sprites>
-    <sprite>sprites\sExplosion</sprite>
     <sprites name="Bosses">
       <sprite>sprites\sBoss1</sprite>
       <sprite>sprites\sBoss2</sprite>
       <sprite>sprites\sBoss_Bullet</sprite>
       <sprite>sprites\sBoss_Bullet_Dissipate</sprite>
+    </sprites>
+    <sprites name="Gui &amp; Fx">
+      <sprite>sprites\sButtonHover</sprite>
+      <sprite>sprites\sButton</sprite>
+      <sprite>sprites\sExplosion</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
@@ -59,57 +63,22 @@
       <script>scripts\scrCreateBeam.gml</script>
       <script>scripts\scrGiveScore.gml</script>
       <script>scripts\scrShootAngle.gml</script>
+      <script>scripts\scrPauseGame.gml</script>
+      <script>scripts\scrUnpausedGame.gml</script>
     </scripts>
     <scripts name="callbacks">
       <script>scripts\cbkJustSpawned.gml</script>
-    </scripts>
-    <scripts name="ext scripts">
-      <script>scripts\scrDrawHealthRing.gml</script>
+      <script>scripts\cbkMenuButtonPressed.gml</script>
     </scripts>
     <scripts name="actions">
       <script>scripts\scrTakeDamage.gml</script>
       <script>scripts\scrGetDissipated.gml</script>
       <script>scripts\scrWaveFinished.gml</script>
     </scripts>
-    <scripts name="tweens">
-      <script>scripts\ease_out_sine.gml</script>
-      <script>scripts\ease_out_quint.gml</script>
-      <script>scripts\ease_out_quart.gml</script>
-      <script>scripts\ease_out_quad.gml</script>
-      <script>scripts\ease_out_elastic.gml</script>
-      <script>scripts\ease_out_expo.gml</script>
-      <script>scripts\ease_out_cubic.gml</script>
-      <script>scripts\ease_out_circ.gml</script>
-      <script>scripts\ease_out_bounce.gml</script>
-      <script>scripts\ease_out_back.gml</script>
-      <script>scripts\ease_linear.gml</script>
-      <script>scripts\ease_inout_sine.gml</script>
-      <script>scripts\ease_inout_quint.gml</script>
-      <script>scripts\ease_inout_quart.gml</script>
-      <script>scripts\ease_inout_quad.gml</script>
-      <script>scripts\ease_inout_expo.gml</script>
-      <script>scripts\ease_inout_elastic.gml</script>
-      <script>scripts\ease_inout_cubic.gml</script>
-      <script>scripts\ease_inout_circ.gml</script>
-      <script>scripts\ease_inout_bounce.gml</script>
-      <script>scripts\ease_inout_back.gml</script>
-      <script>scripts\ease_in_sine.gml</script>
-      <script>scripts\ease_in_quint.gml</script>
-      <script>scripts\ease_in_quart.gml</script>
-      <script>scripts\ease_in_quad.gml</script>
-      <script>scripts\ease_in_expo.gml</script>
-      <script>scripts\ease_in_elastic.gml</script>
-      <script>scripts\ease_in_cubic.gml</script>
-      <script>scripts\ease_in_circ.gml</script>
-      <script>scripts\ease_in_bounce.gml</script>
-      <script>scripts\ease_in_back.gml</script>
-    </scripts>
     <scripts name="helpers">
       <script>scripts\scrCenterText.gml</script>
       <script>scripts\scrUncenterText.gml</script>
       <script>scripts\scrPlaySound.gml</script>
-    </scripts>
-    <scripts name="helperSE">
       <script>scripts\choose_array.gml</script>
       <script>scripts\array_get_second_dimension.gml</script>
       <script>scripts\lerp_col.gml</script>
@@ -125,12 +94,55 @@
       <script>scripts\scrMobileInputSens.gml</script>
       <script>scripts\scrMobileInputGetAccX.gml</script>
     </scripts>
+    <scripts name="ext scripts">
+      <script>scripts\scrDrawHealthRing.gml</script>
+      <scripts name="tweens">
+        <script>scripts\ease_out_sine.gml</script>
+        <script>scripts\ease_out_quint.gml</script>
+        <script>scripts\ease_out_quart.gml</script>
+        <script>scripts\ease_out_quad.gml</script>
+        <script>scripts\ease_out_elastic.gml</script>
+        <script>scripts\ease_out_expo.gml</script>
+        <script>scripts\ease_out_cubic.gml</script>
+        <script>scripts\ease_out_circ.gml</script>
+        <script>scripts\ease_out_bounce.gml</script>
+        <script>scripts\ease_out_back.gml</script>
+        <script>scripts\ease_linear.gml</script>
+        <script>scripts\ease_inout_sine.gml</script>
+        <script>scripts\ease_inout_quint.gml</script>
+        <script>scripts\ease_inout_quart.gml</script>
+        <script>scripts\ease_inout_quad.gml</script>
+        <script>scripts\ease_inout_expo.gml</script>
+        <script>scripts\ease_inout_elastic.gml</script>
+        <script>scripts\ease_inout_cubic.gml</script>
+        <script>scripts\ease_inout_circ.gml</script>
+        <script>scripts\ease_inout_bounce.gml</script>
+        <script>scripts\ease_inout_back.gml</script>
+        <script>scripts\ease_in_sine.gml</script>
+        <script>scripts\ease_in_quint.gml</script>
+        <script>scripts\ease_in_quart.gml</script>
+        <script>scripts\ease_in_quad.gml</script>
+        <script>scripts\ease_in_expo.gml</script>
+        <script>scripts\ease_in_elastic.gml</script>
+        <script>scripts\ease_in_cubic.gml</script>
+        <script>scripts\ease_in_circ.gml</script>
+        <script>scripts\ease_in_bounce.gml</script>
+        <script>scripts\ease_in_back.gml</script>
+      </scripts>
+      <scripts name="lemon_input">
+        <script>scripts\scrLoadInputsFile.gml</script>
+        <script>scripts\scrCreateDefaultInputsFile.gml</script>
+        <script>scripts\scrGetAction.gml</script>
+        <script>scripts\scrGetInput.gml</script>
+      </scripts>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sWhiteOnly.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fCoinyTitle</font>
+    <font>fonts\fCoinyGameTitle</font>
     <font>fonts\fCoinyGame</font>
   </fonts>
   <objects name="objects">
@@ -161,6 +173,10 @@
         <object>objects\oInvinciBeam</object>
         <object>objects\oWaveCompleted</object>
       </objects>
+      <objects name="MenuScreen">
+        <object>objects\oMenuButton</object>
+        <object>objects\oSwipeFade</object>
+      </objects>
     </objects>
     <objects name="Spawners">
       <object>objects\pSpawner</object>
@@ -171,6 +187,9 @@
       <object>objects\oDevCheats</object>
       <object>objects\oGlobalDefinitions</object>
       <object>objects\oDeadControl</object>
+      <object>objects\oMainMenuControl</object>
+      <object>objects\oGamePauseControl</object>
+      <object>objects\oPausedPauseControl</object>
     </objects>
     <objects name="Waves">
       <object>objects\oWave1</object>
@@ -183,11 +202,15 @@
       <object>objects\pBoss</object>
       <object>objects\oBoss2</object>
       <object>objects\oBoss1</object>
+      <object>objects\oDeadBoss</object>
+      <object>objects\oBossChunk</object>
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\MENU</room>
     <room>rooms\MAIN</room>
     <room>rooms\DEAD</room>
+    <room>rooms\PAUSE</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

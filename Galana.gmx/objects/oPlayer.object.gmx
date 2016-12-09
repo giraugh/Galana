@@ -97,7 +97,7 @@ fire.stick_to = id
             <string>///Apply movement to velocity
 
 //get input
-var hi = keyboard_check(key_right) - keyboard_check(key_left)
+var hi = scrGetAction("player_right") - scrGetAction("player_left")
 
 //mobile inputs
 if (scrIsMobile()) {
@@ -243,7 +243,7 @@ image_angle = lerp(image_angle, vrotate_angle * -hsp/(m_hsp), vrotate_speed)
             <string>///Shooting
 
 //shoot in facing direction
-if (keyboard_check(key_shoot) or mouse_check_button(mb_left)) {
+if (scrGetAction("player_shoot")) {
     //do we have bullets left?
     if (chamber_amount &lt; m_chamber_amount and !chamber_reset) {    
         //Shoot
