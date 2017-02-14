@@ -30,6 +30,7 @@
 // --- Pausing Stuff ---
 global.RoomBeforePause = -1
 global.PauseScreenShot = undefined
+global.PauseAction = undefined
 
 // --- Stuff shared Between Instances ---
 global.bar_cur_pos = 0
@@ -37,10 +38,11 @@ global.bar_cur_col = COL_FRIENDLY_LIGHT
 
 // --- Wave Enemy Counts ---
 globalvar waveCounts;
-waveCounts[0] = 20
-waveCounts[1] = 40
-waveCounts[2] = 60
-waveCounts[3] = 65
+waveCounts[0] = 40
+waveCounts[1] = 50
+waveCounts[2] = 45
+waveCounts[3] = 50
+waveCounts[4] = 40
 
 // --- Wave Enemy Types ---
 globalvar waveTypes;
@@ -70,6 +72,10 @@ waveTypes[3, 3] = 3
 
 //Shooting+Spawning Boss
 
+//wave 5 ()
+waveTypes[4, 0] = 5
+waveTypes[4, 1] = 1
+
 // --- Extra Health Chance ---
 globalvar ehChance;
 ehChance[0] = .04
@@ -77,6 +83,17 @@ ehChance[1] = .04
 ehChance[2] = .03
 ehChance[3] = .02
 ehChance[4] = .02
+ehChance[5] = .02
+
+// --- Rooms ---
+globalvar startroom, deadroom, menuroom;
+startroom = MAIN
+deadroom = DEAD
+menuroom = MENU
+
+// --- Starting Wave ---
+globalvar startwave;
+startwave = oWave1
 
 </string>
           </argument>
@@ -109,6 +126,104 @@ if (!file_exists("inputs.ini")) {
 //load it (stores in global.Inputs)
 scrLoadInputsFile()
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Define Particle Systems
+scrDefineSmokeSystem()
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Call 0: Destroy Particle Systems
+event_user(0)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Destroy Particle Systems
+
+/* Smoke */
+part_system_destroy(smoke_system)
+part_type_destroy(smoke_part)
+part_type_destroy(smoke_part_fade)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Call 0: Destroy Particle Systems
+event_user(0)
 </string>
           </argument>
         </arguments>

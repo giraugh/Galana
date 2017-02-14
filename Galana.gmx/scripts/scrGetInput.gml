@@ -1,5 +1,5 @@
-///scrGetInput(input, ?type)
-var in = argument0 //input: 'type:val'
+///scrGetInput(input, type)
+var in = argument0 //input: 'type: val'
 var ct = argument1 //checktype: either "default", "pressed" or "released"
 
 
@@ -15,9 +15,66 @@ val = string_replace_all(val, "
 ", "")
 
 switch (type) {
+    case "GMP":
+        val = string_lower(val)
+        which = real(string_char_at(val, 1))
+        val = string_delete(val, 1, 3)
+        val = string_letters(val)
+        
+        
+         switch (val) {
+            case "a" : val = gp_face1 break
+            case "b" : val = gp_face2 break
+            case "x" : val = gp_face3 break
+            case "y" : val = gp_face4 break
+            
+            case "cross" : val = gp_face1 break
+            case "circle" : val = gp_face2 break
+            case "square" : val = gp_face3 break
+            case "triangle" : val = gp_face4 break
+            
+            case "padl" : val = gp_padl break
+            case "padr" : val = gp_padr break
+            case "padu" : val = gp_padu break
+            case "padd" : val = gp_padd break
+            
+            case "lb" : val = gp_shoulderl break
+            case "l1" : val = gp_shoulderl break
+            case "shoulderl" : val = gp_shoulderl break
+            case "rb" : val = gp_shoulderr break
+            case "r1" : val = gp_shoulderr break
+            case "shoulderr" : val = gp_shoulderl break
+            case "lt" : val = gp_shoulderlb break
+            case "l2" : val = gp_shoulderlb break
+            case "shoulderlb" : val = gp_shoulderlb break
+            case "rt" : val = gp_shoulderrb break
+            case "r2" : val = gp_shoulderrb break
+            case "shoulderrb" : val = gp_shoulderrb break
+            
+            case "start" : val = gp_start break
+            case "select" : val = gp_select break
+            
+            case "ls" : val = gp_stickl break
+            case "rs" : val = gp_stickr break
+            case "l3" : val = gp_stickl break
+            case "r3" : val = gp_stickr break
+         }
+         
+         if (ct == "default")
+            return gamepad_button_check(which, val)
+        
+        if (ct == "pressed")
+            return gamepad_button_check_pressed(which, val)
+            
+        if (ct == "released")
+            return gamepad_button_check_released(which, val)
+        
+    break
+
     case "LET" :
         //Letter (ord)
         val = string_upper(val)
+        val = string_letters(val)
         if (ct == "default")
             return keyboard_check(ord(val))
         
@@ -31,6 +88,7 @@ switch (type) {
     case "VKE":
         //Virtual key (vk_)
         val = string_lower(val)
+        val = string_letters(val)
         switch (val) {
             case "nokey": val = vk_nokey break
             case "anykey": val = vk_anykey break
@@ -121,6 +179,7 @@ switch (type) {
     case "MOS":
         //Mouse (lmb|rmb|mmb)
         val = string_lower(val)
+        val = string_letters(val)
         switch (val) {
             case "lmb": val = mb_left break
             case "left": val = mb_left break

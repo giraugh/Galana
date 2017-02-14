@@ -33,6 +33,9 @@ vsp = 0
 
 //who do we hurt
 team = TEAM_FRIENDLY
+
+//anim speed
+image_speed = .5
 </string>
           </argument>
         </arguments>

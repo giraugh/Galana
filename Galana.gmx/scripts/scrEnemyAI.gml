@@ -6,6 +6,9 @@ if (instance_exists(attack_target)) {
         //First type -----------------------------------------------------------------------------------------------------------------
         //Chases player whilst staying at a distance and shooting
         case 0:
+            //has a slower shooting speed
+            m_bullet_timer = 25
+        
             //shooting--------------------------------
             //shoot
             scrShoot(1, oBulletEnemy)
@@ -101,9 +104,14 @@ if (instance_exists(attack_target)) {
             
             //lets make nearby people invincible!
             with (oEnemy) {
-                //if im not the one granting invincibility
-                if (id != other.id) {
-                    is_invincible = true
+                if (other.health_given < 5) {
+                    //if im not the one granting invincibility
+                    if (!got_extra_health) {
+                        got_extra_health = true
+                        giving_health = other
+                        hth += bonus_health
+                        other.health_given += 1
+                    }
                 }
             }
             
@@ -130,6 +138,15 @@ if (instance_exists(attack_target)) {
                 //increase timer
                 bullet_timer++
             }
+        break
+        
+        // Dives straight down, if it leaves screen it does damage to player
+        case 5:
+            y += 3
+            
+            //if we are too far from the centre then bring us back towards the centre
+            if (x < 32)            x += .5
+            if (x > room_width-32) x -= .5
         break
         
     }

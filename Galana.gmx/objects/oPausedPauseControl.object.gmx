@@ -29,7 +29,7 @@
 
 //rectangle pause menu
 menu_colour = COL_ENEMY_LIGHT
-menu_width = 128*4
+menu_width = 512
 menu_speed = .2
 menu_cur_pos = 0
 </string>
@@ -104,34 +104,13 @@ if (scrGetAction("menu_pause", "pressed")) {
           <argument>
             <kind>1</kind>
             <string>///Draw snapshot
-draw_sprite(global.PauseScreenShot, 0, 0, 0)
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw Menu
 
-//set colour
-draw_set_colour(menu_colour)
+//sprite width
+var w = sprite_get_width(global.PauseScreenShot)
 
-//draw menu
-draw_rectangle(room_width - menu_cur_pos, 0, room_width, room_height, false)
+//draw cropped
+draw_set_alpha(1)
+draw_sprite_part(global.PauseScreenShot, 0, 0, 0, w-menu_cur_pos, room_height, 0, 0)
 </string>
           </argument>
         </arguments>

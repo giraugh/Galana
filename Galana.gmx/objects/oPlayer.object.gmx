@@ -34,7 +34,7 @@ vsp = 0; m_vsp = 8
 dmp = .2
 
 //Character Properties
-hth = 8; m_hth = hth
+hth = 9; m_hth = hth
 
 //Inputs
 key_left = ord("A")
@@ -72,6 +72,9 @@ shake_amount = 15
 fire = instance_create(x, y, oPlayerFire)
 fire.stick_to = id
 
+//flashing health bar
+hth_f = false
+
 </string>
           </argument>
         </arguments>
@@ -97,7 +100,7 @@ fire.stick_to = id
             <string>///Apply movement to velocity
 
 //get input
-var hi = scrGetAction("player_right") - scrGetAction("player_left")
+var hi = scrGetAxis("player_h")
 
 //mobile inputs
 if (scrIsMobile()) {
@@ -294,7 +297,10 @@ if (hth &lt;= 0 and !global.DEV_INVINCIBLE) {
     instance_destroy()
     
     //Audio
-    scrPlaySound(player_death)
+    scrPlaySound(explosion)
+    
+    //Explode!
+    scrCreateBigExplosionOnUs()
     
     //create fade out object
     instance_create(0, 0, oCircleFade)
@@ -354,28 +360,6 @@ with (other) {
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Call Damage Event
-event_user(0)
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="4" ename="oEnemy">
       <action>
@@ -425,28 +409,6 @@ scrTakeDamage(1)
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Call Damage Event
-event_user(0)
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="7" enumb="10">
       <action>
@@ -468,7 +430,11 @@ event_user(0)
             <string>///Shake &amp; Explosion
 
 //explode
-instance_create(x, y, oExplosion)
+//instance_create(x, y, oExplosion)
+with(instance_create(x, y, oShieldDissipation)) {
+    hth = other.hth
+    m_hth = other.m_hth
+}
 
 //shake &amp; bake!
 scrCameraShake(shake_amount, shake_amount)
@@ -569,8 +535,8 @@ if (keyboard_check(key_shoot)){
             <string>///Draw health circle
 
 //get stats
-var totalSegments = m_hth
-var currentSegments = hth
+var totalSegments = m_hth-1
+var currentSegments = hth-1
 var col = COL_FRIENDLY_DARK
 
 //should it flash?
@@ -578,7 +544,16 @@ if (totalSegments == currentSegments and current_time % 4 == 0) {
     col = COL_FRIENDLY_LIGHT
 }
 
+//should it completely flash?
+if (hth_f) {
+    if (current_time/2 % 2 == 0) draw_set_alpha(0)
+    currentSegments = min(currentSegments+1, m_hth-1)
+}
+
 scrDrawHealthRing(x, y, 16, 8, totalSegments, currentSegments, 0, 360, 1, col)
+
+//reset
+draw_set_alpha(1)
 </string>
           </argument>
         </arguments>

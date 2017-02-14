@@ -7,15 +7,16 @@
     <extension index="0">extensions\Easing and Tweening</extension>
   </NewExtensions>
   <sounds name="sound">
+    <sound>sound\explosion</sound>
     <sounds name="player">
       <sound>sound\player_hit</sound>
-      <sound>sound\player_death</sound>
       <sound>sound\player_shoot</sound>
     </sounds>
     <sounds name="enemy">
       <sound>sound\enemy_hit</sound>
       <sound>sound\enemy_hit_block</sound>
       <sound>sound\enemy_shoot</sound>
+      <sound>sound\explosive_warning</sound>
     </sounds>
   </sounds>
   <sprites name="sprites">
@@ -30,12 +31,14 @@
       <sprite>sprites\sEnemy_Fire_2</sprite>
       <sprite>sprites\sEnemy_Fire_3</sprite>
       <sprite>sprites\sEnemy_Fire_4</sprite>
+      <sprite>sprites\sEnemy_Fire_5</sprite>
       <sprite>sprites\sEnemy_1</sprite>
       <sprite>sprites\sEnemy_2</sprite>
       <sprite>sprites\sEnemy_3_transform</sprite>
       <sprite>sprites\sEnemy_3_dive</sprite>
       <sprite>sprites\sEnemy_3</sprite>
       <sprite>sprites\sEnemy_4</sprite>
+      <sprite>sprites\sEnemy_5</sprite>
       <sprite>sprites\sEnemy_Bullet</sprite>
       <sprite>sprites\sEnemy_Bullet_Dissipate</sprite>
     </sprites>
@@ -48,7 +51,13 @@
     <sprites name="Gui &amp; Fx">
       <sprite>sprites\sButtonHover</sprite>
       <sprite>sprites\sButton</sprite>
+      <sprite>sprites\sPauseButton</sprite>
+      <sprite>sprites\sPauseButtonHover</sprite>
       <sprite>sprites\sExplosion</sprite>
+      <sprite>sprites\sBigExplosion</sprite>
+      <sprites name="Particles">
+        <sprite>sprites\sPartSmoke</sprite>
+      </sprites>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
@@ -60,7 +69,6 @@
       <script>scripts\scrCameraFlash.gml</script>
       <script>scripts\scrGameFreeze.gml</script>
       <script>scripts\scrGetEnemyCount.gml</script>
-      <script>scripts\scrCreateBeam.gml</script>
       <script>scripts\scrGiveScore.gml</script>
       <script>scripts\scrShootAngle.gml</script>
       <script>scripts\scrPauseGame.gml</script>
@@ -134,6 +142,18 @@
         <script>scripts\scrCreateDefaultInputsFile.gml</script>
         <script>scripts\scrGetAction.gml</script>
         <script>scripts\scrGetInput.gml</script>
+        <script>scripts\scrGetAxis.gml</script>
+      </scripts>
+    </scripts>
+    <scripts name="drawing">
+      <script>scripts\scrDrawWaveDisp.gml</script>
+    </scripts>
+    <scripts name="fx">
+      <script>scripts\scrCreateBigExplosionOnUs.gml</script>
+      <script>scripts\scrCreateBigExplosion.gml</script>
+      <scripts name="particles">
+        <script>scripts\scrDefineSmokeSystem.gml</script>
+        <script>scripts\scrEmitSmoke.gml</script>
       </scripts>
     </scripts>
   </scripts>
@@ -144,6 +164,7 @@
     <font>fonts\fCoinyTitle</font>
     <font>fonts\fCoinyGameTitle</font>
     <font>fonts\fCoinyGame</font>
+    <font>fonts\fCoinyMini</font>
   </fonts>
   <objects name="objects">
     <objects name="Player">
@@ -170,11 +191,13 @@
         <object>objects\oSticks</object>
         <object>objects\pFadeOut</object>
         <object>objects\oCameraFlash</object>
-        <object>objects\oInvinciBeam</object>
         <object>objects\oWaveCompleted</object>
+        <object>objects\oBigExplosion</object>
+        <object>objects\oShieldDissipation</object>
       </objects>
       <objects name="MenuScreen">
         <object>objects\oMenuButton</object>
+        <object>objects\oPauseButton</object>
         <object>objects\oSwipeFade</object>
       </objects>
     </objects>
@@ -196,6 +219,7 @@
       <object>objects\oWave2</object>
       <object>objects\oWave3</object>
       <object>objects\oWave4</object>
+      <object>objects\oWave5</object>
       <object>objects\pWave</object>
     </objects>
     <objects name="Bosses">
@@ -211,6 +235,7 @@
     <room>rooms\MAIN</room>
     <room>rooms\DEAD</room>
     <room>rooms\PAUSE</room>
+    <room>rooms\PARTICLE_TEST</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

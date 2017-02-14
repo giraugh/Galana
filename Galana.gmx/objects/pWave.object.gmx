@@ -63,6 +63,12 @@ bar_colour = COL_FRIENDLY_DARK
 bar_edge_offset = 16
 bar_height = 10
 bar_bottom_offset = 10
+bar_count_offset = 8
+bar_count_pos = 10
+bar_count_radius = 3
+bar_count_spacing = 7
+bar_count_last_alpha = 0
+bar_count_last_alpha_inc = .15
 
 //-------------
 
@@ -142,6 +148,7 @@ if (spawned_count &gt;= wave_enemy_count) {
             //show wave completed text
             var text = instance_create(room_width/2, room_height/2, oWaveCompleted);
             text.text_content = "Wave " + string(wave_number) + " Completed"
+            text.wave_number = wave_number
         }
         
         //increase timer
@@ -177,6 +184,52 @@ if (spawned_count &gt;= wave_enemy_count) {
             <string>///(DEV) Skip Wave
 if (global.DEV_CAN_SKIP and keyboard_check_pressed(vk_f1)) {
     scrWaveFinished()
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Request another enemy</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//Reset alarm if not wave done
+if (spawned_count &lt; wave_enemy_count) {
+    alarm[0] = 1
 }
 </string>
           </argument>
@@ -224,6 +277,50 @@ var y2 = room_height - bar_bottom_offset
 //set colour and draw w/o outlined
 draw_set_colour(global.bar_cur_col)
 draw_rectangle(x1, y1, x2, y2, false)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Wave Count
+
+//where does it start?
+var yy = room_height - (bar_bottom_offset + bar_height + bar_count_offset)
+var xx = bar_edge_offset + bar_count_pos
+
+//set colour
+draw_set_colour(COL_FRIENDLY_LIGHT)
+
+//draw circles (last one uses alpha var)
+for (var i = 1;i&lt;=wave_number;i++) {
+    //are we the last?
+    if (i == wave_number) {
+        draw_set_alpha(bar_count_last_alpha)
+    } else {
+        draw_set_alpha(1)
+    }
+    
+    //draw circle
+    draw_circle(xx + (i * bar_count_spacing), yy, bar_count_radius, false)
+}
+
+//increase last alpha
+bar_count_last_alpha = lerp(bar_count_last_alpha, 1, bar_count_last_alpha_inc)
 </string>
           </argument>
         </arguments>

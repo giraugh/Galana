@@ -77,6 +77,9 @@ if (hth &lt;= 0) {
         wave_next = other.wave_next
     }
     
+    //Set Health Flash for player 
+    with (oPlayer) {hth_f = true}
+    
     //destroy me
     instance_destroy()
 }

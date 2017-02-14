@@ -34,7 +34,7 @@ wave_number = 4
 boss_to_spawn = oBoss2
 
 //Continuation
-wave_next = oWave4
+wave_next = oWave5
 </string>
           </argument>
         </arguments>

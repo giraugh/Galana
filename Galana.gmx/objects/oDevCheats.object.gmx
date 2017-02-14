@@ -29,7 +29,12 @@
 
 //player can't die
 global.DEV_INVINCIBLE = false
+
+//skip wave with F1
 global.DEV_CAN_SKIP = true
+
+//choose a wave from menu with number keys
+global.DEV_CAN_GOTO_WAVE = true
 </string>
           </argument>
         </arguments>

@@ -33,6 +33,7 @@ types[1] = sEnemy_2
 types[2] = sEnemy_3
 types[3] = sEnemy_4
 types[4] = sEnemy_3
+types[5] = sEnemy_5
 type = 1
 
 //Fire Types
@@ -41,6 +42,7 @@ ftypes[1] = sEnemy_Fire_2
 ftypes[2] = sEnemy_Fire_3
 ftypes[3] = sEnemy_Fire_4
 ftypes[4] = sEnemy_Fire_3
+ftypes[5] = sEnemy_Fire_5
 
 //Sprite Override
 s_override = false
@@ -56,6 +58,11 @@ die_of_old_age = 10*room_speed
 
 //Statuses
 is_invincible = false
+bonus_health = 3
+got_extra_health = false
+giving_health = noone
+health_given = 0
+health_redeemed = false
 
 //Anim
 image_speed = .1
@@ -87,18 +94,14 @@ attack_offset = random_range(-16, 16) //to seperate out enemies
 team = TEAM_ENEMY
 
 //camera shake
-shake_amount = 15
+shake_amount = 5
 
 //seperation
 seperation_dist = 15
 seperation_force = 5
 
 //invinci beams
-beam_alpha_decrease = .05
-beam_colour = COL_ENEMY_PURPLE_DARK
-beam_roffset = 0
-beam_yoffset = -5
-beam_width = 5
+beam_dist = 0
 
 //fire
 fire = instance_create(x, y, oEnemyFire)
@@ -176,6 +179,16 @@ if (random(1) &lt; ehChance[type]) {
             <string>///Nullify Status
 
 is_invincible = false
+
+
+if (got_extra_health and !health_redeemed) {
+    if (!instance_exists(giving_health)) {
+        hth -= bonus_health
+        hth = max(1, hth)
+        health_redeemed = true
+        beam_dist = 0
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -251,6 +264,23 @@ if (!instance_exists(oPlayer)) {
 if (x &gt; room_width or x &lt; 0 or y &gt; room_height) {
     instance_destroy()
     scrGiveScore(5)
+    
+    //if im type 5, explode
+    if (type == 5) {
+        with (oPlayer) {
+            scrTakeDamage(2)
+        }
+        
+        //Do explosion effect
+        if (type == 5) {
+            for (i=16;i&lt;room_width;i+=32) {
+                scrCreateBigExplosion(i, room_height - 20)
+            }
+        }
+        
+        //Play Sound
+        scrPlaySound(explosion)
+    }
 }
 </string>
           </argument>
@@ -334,10 +364,31 @@ if (instance_exists(ne)) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Create Invinci Beams
-if (type == 3) {
-    with (oEnemy) {
-        scrCreateBeam(other, beam_colour, beam_alpha_decrease, beam_width, beam_roffset, beam_yoffset)
+            <string>///Are we dead?
+if (hth &lt;= 0) {
+    //audio
+    scrPlaySound(enemy_hit)
+
+    //explode
+    instance_create(x, y, oExplosion)
+        
+    //die
+    instance_destroy()
+
+    //award score
+    scrGiveScore(10)
+    
+    //spawn next enemy! Keep up the pace
+    with(pWave){event_user(0)}
+    
+    if (type == 5) {
+        scrCreateBigExplosion(x, y)
+        scrPlaySound(explosion)
+        with (oEnemy) {
+            if (distance_to_object(other) &lt; 45) {
+                hth = 0
+            }
+        }
     }
 }
 </string>
@@ -375,22 +426,76 @@ if (not is_invincible) {
         //shake &amp; bake!
         scrCameraShake(shake_amount, shake_amount)
         
-        //are we dead?
-        if (hth &lt;= 0) {
-            //audio
-            scrPlaySound(enemy_hit)
-        
-            //explode
-            instance_create(x, y, oExplosion)
-            
-            //die
-            instance_destroy()
-        
-            //award score    
-            scrGiveScore(10)
-        } else {
+        //if we didn't die
+        if (hth != 0) {
             //block audio
             scrPlaySound(enemy_hit_block)
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="72">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Invinci Beams
+if (type == 3) {
+    with (oEnemy) {
+        if (type != 3) {
+            draw_set_colour(COL_ENEMY_LIGHT)
+            if (got_extra_health and giving_health = other) {
+            
+                /* Properties */
+                off = 32
+                w = 10
+                
+                /* Calculate Line w/ Offsets */
+                x1 = x
+                y1 = y
+                x2 = other.x
+                y2 = other.y
+                d = point_direction(x1, y1, x2, y2)
+                xn = lengthdir_x(off, d)
+                yn = lengthdir_y(off, d)
+                x1 += xn
+                y1 += yn
+                x2 -= xn
+                y2 -= yn
+                
+                /* Draw part of the line */
+                beam_dist = lerp(beam_dist, 1, .17)
+                
+                //Get Line Stats
+                d = point_direction(x2, y2, x1, y1)
+                l = point_distance(x2, y2, x1, y1)
+                
+                //Interpolate to find length
+                l *= beam_dist
+                x1 = x2 + lengthdir_x(l, d)
+                y1 = y2 + lengthdir_y(l, d)
+                
+                /* Draw Line */ 
+                draw_line_width(x1, y1, x2, y2, w)
+                draw_circle(x1, y1, w/2, false)
+                draw_circle(x2, y2, w/2, false)
+            }
         }
     }
 }
@@ -421,6 +526,46 @@ if (not is_invincible) {
 //reset image alpha &amp; blend
 image_blend = c_white
 image_alpha = 1
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Flash (and leave trail and play sound) if explosive
+if (type == 5) {
+
+    //flash
+    if (current_time % 4 == 0) {
+        //colour
+        image_blend = c_red
+        
+        //sound
+        if (choose(true, false)) {
+            scrPlaySound(explosive_warning)
+        }
+    }
+
+    
+    //draw trail
+    var w = 5
+    draw_line_width_colour(x - 1, -2, x - 1, y, w, COL_ENEMY_DARK, COL_ENEMY_LIGHT)
+}
+
 </string>
           </argument>
         </arguments>

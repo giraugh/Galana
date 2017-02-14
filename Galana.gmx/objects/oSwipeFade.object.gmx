@@ -32,7 +32,7 @@ rect_colour = c_white
 rect_speed = .17
 
 //next
-room_to_goto = MAIN
+room_to_goto = startroom
 
 //internal stuff for tweens
 rect_cur_pos = 0
