@@ -8,3 +8,5 @@
   - Shielding enemies have new lazer effect
   - Explosive enemies avoid screen edges
   - Player gains 1 health after defeating boss
+  - Chasing-Shooting enemies shoot slower
+  - Less screenshake overall (about 1/3 as much)
