@@ -29,7 +29,7 @@
 
 //rectangle pause menu
 menu_colour = COL_ENEMY_LIGHT
-menu_width = 512
+menu_width = room_width / 2
 menu_speed = .2
 menu_cur_pos = 0
 </string>

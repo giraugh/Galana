@@ -30,6 +30,7 @@
 //rect
 rect_colour = c_white
 rect_speed = .17
+other_side = false
 
 //next
 room_to_goto = startroom
@@ -113,7 +114,11 @@ if (round(max(1, rect_cur_pos))/room_width &gt;= 1) {
 draw_set_colour(rect_colour)
 
 //draw it
-draw_rectangle(0, 0, rect_cur_pos, room_height, false)
+if other_side {
+    draw_rectangle(room_width - rect_cur_pos, 0, room_width, room_height, false)
+} else {
+    draw_rectangle(0, 0, rect_cur_pos, room_height, false)
+}
 </string>
           </argument>
         </arguments>

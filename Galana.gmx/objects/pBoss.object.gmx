@@ -38,8 +38,8 @@ hth = hth_max
 bar_pos_speed = .2
 bar_colour = COL_ENEMY_LIGHT
 bar_edge_offset = 16
-bar_height = 10
-bar_bottom_offset = 10
+bar_height = 9
+bar_bottom_offset = 6
 
 //image fx
 flash_white = false
@@ -51,7 +51,7 @@ team = TEAM_ENEMY
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -87,6 +87,8 @@ if (hth &lt;= 0) {
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -135,6 +137,22 @@ if (other.team != team) {
         //take damage
         hth--
         
+        // take explosion damage?
+        if (other.is_missile) {
+            with (other) {
+                scrCreateBigExplosionOnUs()
+                scrPlaySound(explosion)
+            }
+            hth -= 5
+            with (oEnemy) {
+                if other != self {
+                    if distance_to_object(other) &lt; 50 {
+                        hth -= 2
+                    }
+                }
+            }
+        }
+        
         //flash white
         flash_white = true
         
@@ -150,6 +168,40 @@ if (other.team != team) {
       </action>
     </event>
     <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Self
+
+//flash white?
+if (flash_white) {
+    flash_white = false
+    shader_set(sWhiteOnly)
+}
+
+//Draw Self
+draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
+
+
+//Reset Shader
+shader_reset()
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -189,40 +241,6 @@ var y2 = room_height - bar_bottom_offset
 //set colour and draw w/o outlined
 draw_set_colour(global.bar_cur_col)
 draw_rectangle(x1, y1, x2, y2, false)
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw Self
-
-//flash white?
-if (flash_white) {
-    flash_white = false
-    shader_set(sWhiteOnly)
-}
-
-//Draw Self
-draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
-
-
-//Reset Shader
-shader_reset()
 </string>
           </argument>
         </arguments>

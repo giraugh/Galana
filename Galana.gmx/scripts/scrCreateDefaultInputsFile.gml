@@ -46,7 +46,8 @@ ini_write_string("menu_select", "2", 'GMP: 0: A')
 ini_write_string("menu_pause", "0", 'VKE: escape')
 ini_write_string("menu_pause", "1", 'VKE: tab')
 ini_write_string("menu_pause", "2", 'VKE: backspace')
-ini_write_string("menu_pause", "2", 'GMP: 0: start')
+ini_write_string("menu_pause", "3", 'GMP: 0: start')
+ini_write_string("menu_pause", "3", 'LET: M')
 
 //continue after death
 ini_write_string("menu_continue", "0", 'VKE: space')

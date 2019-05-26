@@ -15,6 +15,7 @@ switch (attack_state) {
         
         //increase state timer
         attack_timer++
+        if (rage) attack_timer++
         if (attack_timer > timer_default) {
             attack_timer = 0
             attack_state = "wait"
@@ -26,24 +27,30 @@ switch (attack_state) {
     case "dive":
         //Actually Dive
         y += dive_speed
+        if (rage) y+=1
         
         //Go back?
         if (y > room_height + (sprite_width)) {
+            y = -sprite_height * 2
             attack_state = "return"
         }
+        
+        //create trail if rage
+        if (rage) scrCreateTrail()
         
     break
     
     case "wait":
         //Wait for timer
         attack_timer++
+        if (rage) attack_timer++
         if (attack_timer > timer_wait) {
             attack_timer = 0
             attack_state = "dive"
         }
         
         //Float back
-        y -= 2
+        y -= 3
     break
     
     case "return":
@@ -57,3 +64,13 @@ switch (attack_state) {
     break
     
 }
+
+//start to float if flashing
+if (attack_state == "default" and attack_timer > (timer_default - 30)) {
+    y -= 1
+    if (rage) y -= .5
+    x += irandom_range(-4, 4)
+}
+
+//rage shake
+if (rage) x += irandom_range(-1, 1)

@@ -5,148 +5,51 @@ if (instance_exists(attack_target)) {
     switch (argument0) {
         //First type -----------------------------------------------------------------------------------------------------------------
         //Chases player whilst staying at a distance and shooting
-        case 0:
-            //has a slower shooting speed
-            m_bullet_timer = 25
-        
-            //shooting--------------------------------
-            //shoot
-            scrShoot(1, oBulletEnemy)
-            
-            //increase timer
-            bullet_timer++
-        
-            //go to preferred height------------------
-            y = lerp(y, pref_height, pref_speed)
-            
-            //follow target----------------------------
-            
-            //go to its x pos
-            x = lerp(x, p.x + attack_offset, attack_speed)
-            
+        case ENEMY_TRACKER:
+            scrTracker_0()
         break
         
         //Second Type ------------------------------------------------------------------------------------------------------------------
         //Slowly move towards x whilst moving down
-        case 1:
-            dir = point_direction(x, y, p.x, p.y + 16)
-            x += lengthdir_x(3, dir)
-            y += max(3, lengthdir_y(3, dir))
+        case ENEMY_CHASER:
+            scrChaser_1()
         break
     
         //Third Type --------------------------------------------------------------------------------------------------------------------
         //Follows player till its in line then dives player
-        case 2:
-            if (state == "dive") {
-                //dive------------------------
-                
-                //re-enabled fire
-                fire_enabled = true
-                
-                //move
-                y += dive_speed
-            }
-            if (state == "pause") {
-                //disable fire
-                fire_enabled = false
-            
-                //set sprite to transform sprite (requires override)
-                sprite_index = dive_transform_sprite
-                image_speed = .2
-                s_override = true
-                s_over = dive_transform_sprite
-                
-                //drift
-                y -= 1
-                
-                //are we finished transforming?
-                if (image_index >= image_number-1) {
-                    sprite_index = dive_sprite
-                    s_over = dive_sprite
-                    state = "dive"
-                }
-            }
-            if (state == "default") {
-                
-                //should we dive?--------------------------
-                //are we in line (and at least at pref height)? and just dive after a while aswell
-                if (life > dive_give_up or (abs(p.x - x) < dive_distance and round(y) >= pref_height)) {
-                    state = "pause"
-                    image_index = 0
-                }      
-                
-                //go to preferred height------------------
-                y = lerp(y, pref_height, pref_speed)
-                
-                
-                //follow target----------------------------
-                
-                //go to its x pos
-                x = lerp(x, p.x + attack_offset, attack_speed)
-            }
-            
+        case ENEMY_DIVER:
+            scrDiver_2()
         break
         
         //Fourth Type --------------------------------------------------------------------------------------------------------------------
-        //Goes to pref height and avoids player on x, creates a shield which makes other enemies invulnerable
-        case 3:
-            //go to preferred height------------------
-            y = lerp(y, pref_height, pref_speed)
-            
-            //avoid x----------------------------
-            if (p.x > x) {
-                x = lerp(x, 64 + attack_speed, attack_speed)
-            }
-            
-            if (p.x < x) {
-                x = lerp(x, room_width - 64 - attack_speed, attack_speed)
-            }
-            
-            //lets make nearby people invincible!
-            with (oEnemy) {
-                if (other.health_given < 5) {
-                    //if im not the one granting invincibility
-                    if (!got_extra_health) {
-                        got_extra_health = true
-                        giving_health = other
-                        hth += bonus_health
-                        other.health_given += 1
-                    }
-                }
-            }
-            
+        //Goes to pref height and avoids player on x, creates a shield which increases other enemies health
+        case ENEMY_SHIELDER:
+            scrShielder_3()
         break
         
         //Fifth Type ------------------------------------------------------------------------------------------------------------------------
         //Travels across screen whilst shooting down
-        case 4:
-            //first time jump to left
-            if (state == "default") {
-                state = "move"
-                x = 0
-            } else {
-            
-                //go to preferred height------------------
-                y = lerp(y, pref_height, pref_speed)
-            
-                //avoid x----------------------------
-                x += 2
-                
-                //shoot-----------------------------
-                scrShoot(1, oBulletEnemy)
-                
-                //increase timer
-                bullet_timer++
-            }
+        case ENEMY_TRAVELLER:
+            scrTraveller_4()
         break
         
         // Dives straight down, if it leaves screen it does damage to player
-        case 5:
-            y += 3
-            
-            //if we are too far from the centre then bring us back towards the centre
-            if (x < 32)            x += .5
-            if (x > room_width-32) x -= .5
+        case ENEMY_EXPLODER:
+            scrExploder_5()
+        break
+        
+        // Spawns Chasers
+        case ENEMY_SPAWNER:
+            scrSpawner_6()
+        break
+        
+        // Pushes enemies / player around
+        case ENEMY_TELEKINETIC:
+            scrTelekinetic_7()
+        break
+        
+        case ENEMY_SPLITTER:
+            scrSplitter_8()
         break
         
     }

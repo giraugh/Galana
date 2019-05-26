@@ -46,7 +46,7 @@
     <option_android_lint>-1</option_android_lint>
     <option_android_major_version>1</option_android_major_version>
     <option_android_min_sdk_version>9</option_android_min_sdk_version>
-    <option_android_minor_version>4</option_android_minor_version>
+    <option_android_minor_version>6</option_android_minor_version>
     <option_android_mmedia_ads>0</option_android_mmedia_ads>
     <option_android_moga>0</option_android_moga>
     <option_android_mopub_ads>0</option_android_mopub_ads>
@@ -538,7 +538,7 @@
     <option_winUAP_store_logo>Configs\Default\WindowsUAP\logos\StoreLogo.scale-100.png</option_winUAP_store_logo>
     <option_winUAP_texture_page>1024</option_winUAP_texture_page>
     <option_winUAP_wide_logo>Configs\Default\WindowsUAP\logos\WideLogo.scale-100.png</option_winUAP_wide_logo>
-    <option_windowcolor>clBlack</option_windowcolor>
+    <option_windowcolor>clWhite</option_windowcolor>
     <option_windows_alternate_sync_method>False</option_windows_alternate_sync_method>
     <option_windows_build_version>0</option_windows_build_version>
     <option_windows_company_info></option_windows_company_info>
@@ -649,7 +649,7 @@
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants>
-    <constants number="8">
+    <constants number="17">
       <constant name="TEAM_FRIENDLY">0</constant>
       <constant name="TEAM_ENEMY">1</constant>
       <constant name="COL_ENEMY_LIGHT">make_colour_rgb(172, 50, 50)</constant>
@@ -658,6 +658,15 @@
       <constant name="COL_ENEMY_PURPLE_DARK">make_colour_rgb(96, 45, 116)</constant>
       <constant name="COL_FRIENDLY_DARK">make_colour_rgb(99, 155, 255)</constant>
       <constant name="COL_FRIENDLY_LIGHT">make_colour_rgb(76, 123, 207)</constant>
+      <constant name="ENEMY_TRACKER">0</constant>
+      <constant name="ENEMY_CHASER">1</constant>
+      <constant name="ENEMY_DIVER">2</constant>
+      <constant name="ENEMY_SHIELDER">3</constant>
+      <constant name="ENEMY_TRAVELLER">4</constant>
+      <constant name="ENEMY_EXPLODER">5</constant>
+      <constant name="ENEMY_SPAWNER">6</constant>
+      <constant name="ENEMY_TELEKINETIC">7</constant>
+      <constant name="ENEMY_SPLITTER">8</constant>
     </constants>
   </ConfigConstants>
 </Config>

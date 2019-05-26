@@ -55,14 +55,14 @@ boss_spawn_loc_y = -200
 
 //Continuation
 wave_next_timer = 0
-wave_next_delay = 300 * (room_speed / 100)
+wave_next_delay = global.wave_delay
 
 //wave bar
 bar_pos_speed = .2
 bar_colour = COL_FRIENDLY_DARK
 bar_edge_offset = 16
-bar_height = 10
-bar_bottom_offset = 10
+bar_height = 3
+bar_bottom_offset = 8
 bar_count_offset = 8
 bar_count_pos = 10
 bar_count_radius = 3
@@ -185,6 +185,28 @@ if (spawned_count &gt;= wave_enemy_count) {
 if (global.DEV_CAN_SKIP and keyboard_check_pressed(vk_f1)) {
     scrWaveFinished()
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Keep global wave count consistent
+wave_num = wave_number
 </string>
           </argument>
         </arguments>
@@ -321,6 +343,32 @@ for (var i = 1;i&lt;=wave_number;i++) {
 
 //increase last alpha
 bar_count_last_alpha = lerp(bar_count_last_alpha, 1, bar_count_last_alpha_inc)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw Score
+draw_set_halign(fa_left)
+draw_set_font(fCoinyGame)
+draw_set_colour(COL_FRIENDLY_LIGHT)
+draw_text(bar_edge_offset, bar_edge_offset / 2, score)
+scrUncenterText()
 </string>
           </argument>
         </arguments>

@@ -32,8 +32,11 @@ types[0] = sEnemy_1
 types[1] = sEnemy_2
 types[2] = sEnemy_3
 types[3] = sEnemy_4
-types[4] = sEnemy_3
+types[4] = sEnemy_6
 types[5] = sEnemy_5
+types[6] = sEnemy_7
+types[7] = sEnemy_8
+types[8] = sEnemy_9
 type = 1
 
 //Fire Types
@@ -41,12 +44,16 @@ ftypes[0] = sEnemy_Fire_1
 ftypes[1] = sEnemy_Fire_2
 ftypes[2] = sEnemy_Fire_3
 ftypes[3] = sEnemy_Fire_4
-ftypes[4] = sEnemy_Fire_3
+ftypes[4] = sEnemy_Fire_6
 ftypes[5] = sEnemy_Fire_5
+ftypes[6] = sEnemy_Fire_7
+ftypes[7] = sEnemy_Fire_8
+ftypes[8] = sEnemy_Fire_8
 
 //Sprite Override
 s_override = false
 s_over = undefined
+s_index = undefined
 
 //State Control
 state = "default"
@@ -55,10 +62,11 @@ state = "default"
 hth = 1 //how many hits to kill?
 life = 0 //how long alive
 die_of_old_age = 10*room_speed
+has_died = false
 
 //Statuses
 is_invincible = false
-bonus_health = 3
+bonus_health = 2
 got_extra_health = false
 giving_health = noone
 health_given = 0
@@ -90,6 +98,9 @@ attack_target = oPlayer
 attack_speed = .03
 attack_offset = random_range(-16, 16) //to seperate out enemies
 
+//travellers
+mrspd = random_range(1.6, 2.2)
+
 //team
 team = TEAM_ENEMY
 
@@ -97,8 +108,9 @@ team = TEAM_ENEMY
 shake_amount = 5
 
 //seperation
-seperation_dist = 15
+seperation_dist = 20
 seperation_force = 5
+seed = random(100)
 
 //invinci beams
 beam_dist = 0
@@ -108,6 +120,18 @@ fire = instance_create(x, y, oEnemyFire)
 fire.stick_to = id
 fire.ftypes = ftypes
 fire_enabled = true
+
+//spawning
+espawn_timer = 0
+espawn_timer_m = room_speed
+espawn_m = 7
+espawned = 0
+stay_put = false
+stay_put_x = 0
+
+// splitters
+slow_roll = 0
+has_been_granted_health = false
 </string>
           </argument>
         </arguments>
@@ -272,7 +296,7 @@ if (x &gt; room_width or x &lt; 0 or y &gt; room_height) {
         }
         
         //Do explosion effect
-        if (type == 5) {
+        if (type == ENEMY_EXPLODER) {
             for (i=16;i&lt;room_width;i+=32) {
                 scrCreateBigExplosion(i, room_height - 20)
             }
@@ -328,21 +352,18 @@ life++
             <string>///Keep away from others
 
 //get nearest enemy
-var ne = instance_nearest(x, y, oEnemy)
-
-//if 'ne' exists
-if (instance_exists(ne)) {
-
+with (oEnemy) {
     //are we too close?
-    if (abs(ne.x - x) &lt; seperation_dist and abs(ne.y - y) &lt; seperation_dist ) {
+    var dist = distance_to_point(other.x, other.y)
+    if (dist &lt; seperation_dist) {
     
         //get direction to them
-        dir = sign(ne.x - x)
+        dir = sign(other.x - x)
         
         //push away from them
-        x = lerp(x, x - (dir * seperation_force), .2)
+        var f = lerp(0.01, .13, 1 - (dist / seperation_dist))
+        x = lerp(x, x - (dir * seperation_force), f)
     }
-
 }
 </string>
           </argument>
@@ -365,7 +386,10 @@ if (instance_exists(ne)) {
           <argument>
             <kind>1</kind>
             <string>///Are we dead?
-if (hth &lt;= 0) {
+if (hth &lt;= 0 and !has_died) {
+    // Dont do this twice
+    has_died = true
+
     //audio
     scrPlaySound(enemy_hit)
 
@@ -381,7 +405,7 @@ if (hth &lt;= 0) {
     //spawn next enemy! Keep up the pace
     with(pWave){event_user(0)}
     
-    if (type == 5) {
+    if (type == ENEMY_EXPLODER or type == ENEMY_SPAWNER) {
         scrCreateBigExplosion(x, y)
         scrPlaySound(explosion)
         with (oEnemy) {
@@ -390,6 +414,77 @@ if (hth &lt;= 0) {
             }
         }
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Rolling
+image_angle += slow_roll
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Grant extra health
+if not has_been_granted_health and type == ENEMY_SPLITTER {
+    has_been_granted_health = true
+    hth += 1
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Stay Put (if nec)
+if (stay_put) {
+    x = lerp(x, stay_put_x, .4)
 }
 </string>
           </argument>
@@ -419,6 +514,22 @@ if (not is_invincible) {
     if (other.team != team) {
         //take damage
         hth--
+        
+        // take explosion damage?
+        if (other.is_missile) {
+           with (other) {
+            scrCreateBigExplosionOnUs()
+            scrPlaySound(explosion)
+           }
+            hth--
+            with (oEnemy) {
+                if other != self {
+                    if distance_to_object(other) &lt; 50 {
+                        hth -= 2
+                    }
+                }
+            }
+        }
         
         //kill them
         with (other) {instance_destroy()}
@@ -593,7 +704,13 @@ var spr = types[type]
 
 //should it be overriden? (i.e diving)
 if (s_override) {
+    // Override sprite
     spr = s_over
+    
+    // Override index
+    if (s_index != undefined) {
+        image_index = s_index
+    }
 }
 
 //draw type

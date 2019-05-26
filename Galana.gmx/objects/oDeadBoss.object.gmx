@@ -69,7 +69,9 @@ explosion_sound_chance = .1
           <argument>
             <kind>1</kind>
             <string>///spawn next wave
-instance_create(0, 0, wave_next)
+if (wave_next != noone) {
+    instance_create(0, 0, wave_next)
+}
 </string>
           </argument>
         </arguments>

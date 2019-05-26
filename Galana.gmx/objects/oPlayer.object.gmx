@@ -28,13 +28,16 @@
             <string>///Initial Setup
 
 //Movement
-spd = 1.5
+spd = 1.7
 hsp = 0; m_hsp = 8
 vsp = 0; m_vsp = 8
 dmp = .2
 
 //Character Properties
 hth = 9; m_hth = hth
+
+// Character status
+is_invincible = false
 
 //Inputs
 key_left = ord("A")
@@ -52,6 +55,10 @@ bullet_which = -1
 bullet_timer = 0; m_bullet_timer = 5
 chamber_amount = 0; m_chamber_amount = 16
 chamber_reset = false
+
+chamber_bonus = 8
+chamber_bonus_timer = 0
+m_chamber_bonus_timer = 70
 
 //Anims
 image_speed = .1
@@ -75,6 +82,76 @@ fire.stick_to = id
 //flashing health bar
 hth_f = false
 
+// Upgrades
+can_missile = false
+number_pickups = 0
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reset score
+score = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>No longer invincible</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Cancel invincibility
+is_invincible = false
 </string>
           </argument>
         </arguments>
@@ -251,9 +328,59 @@ if (scrGetAction("player_shoot")) {
     if (chamber_amount &lt; m_chamber_amount and !chamber_reset) {    
         //Shoot
         scrShoot(-1, oBullet)
+        
         chamber_amount++
+        
+        // Shotgun shot
+        if (chamber_bonus_timer &gt;= m_chamber_bonus_timer) {
+            chamber_bonus_timer = 0
+            if not can_missile {
+                for (i = 0; i &lt; chamber_bonus; i++) {
+                    bullet_timer = m_bullet_timer
+                    with (scrShoot(-1, oBullet)) {
+                        hsp += random_range(-1, 1)
+                    }
+                }
+            } else {
+                for (i = 0; i &lt; 3; i++) {
+                    bullet_timer = m_bullet_timer
+                    with (scrShoot(-1, oMissile)) {
+                        hsp += random_range(-1, 1)
+                    }
+                }
+            }
+        }
+        
+        /*
+        // And Bonus (Shotgun shot)
+        if (chamber_bonus_timer &gt; 0) {
+            var bonus = floor(chamber_bonus * scrShotChargeCurve(chamber_bonus_timer / m_chamber_bonus_timer))
+            chamber_bonus_timer = 0
+            var bt = bullet_timer
+            var bul = oBullet
+            if can_missile and chamber_bonus_timer &gt;= m_chamber_bonus_timer {
+                bul = oMissile
+            }
+            bullet_timer = m_bullet_timer
+            while (bonus &gt; 0) {
+                bonus--
+                var b = scrShoot(-1, bul)
+                with (b) {hsp += random_range(-1, 1)}
+            }
+            bullet_timer = bt
+        } */
     } else {
         chamber_reset = true
+    }
+    
+    // SLOWLY CHARGE BONUS ATTACK
+    chamber_bonus_timer += .4
+    
+} else {
+    // Charge a bonus attack
+    chamber_bonus_timer++
+    if (chamber_bonus_timer &gt; m_chamber_bonus_timer) {
+        chamber_bonus_timer = m_chamber_bonus_timer
     }
 }
 
@@ -294,7 +421,12 @@ bullet_timer++
             <kind>1</kind>
             <string>///Are We Dead?
 if (hth &lt;= 0 and !global.DEV_INVINCIBLE) {
-    instance_destroy()
+
+    // Get Wave Number 
+    var wave = wave_num // from globalvar
+    
+    // Record score to file
+    scrRecordRun(wave, score, lap)
     
     //Audio
     scrPlaySound(explosion)
@@ -304,6 +436,9 @@ if (hth &lt;= 0 and !global.DEV_INVINCIBLE) {
     
     //create fade out object
     instance_create(0, 0, oCircleFade)
+    
+    // Destroy me
+    instance_destroy()
 }
 </string>
           </argument>
@@ -329,7 +464,9 @@ if (hth &lt;= 0 and !global.DEV_INVINCIBLE) {
             <kind>1</kind>
             <string>///Take Damage
 
-scrTakeDamage(1)
+if (not is_invincible) {
+    scrTakeDamage(1)
+}
 </string>
           </argument>
         </arguments>
@@ -403,8 +540,9 @@ with (other){
           <argument>
             <kind>1</kind>
             <string>///Take Damage
-
-scrTakeDamage(1)
+if (not is_invincible) {
+    scrTakeDamage(1)
+}
 </string>
           </argument>
         </arguments>
@@ -487,6 +625,29 @@ scrPlaySound(player_hit)
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Invincible Frames
+is_invincible = true
+alarm[0] = 25
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="72">
       <action>
@@ -554,6 +715,62 @@ scrDrawHealthRing(x, y, 16, 8, totalSegments, currentSegments, 0, 360, 1, col)
 
 //reset
 draw_set_alpha(1)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw bonus shot circle
+
+//get stats
+var totalSegments = 100
+var currentSegments = floor(100 * scrShotChargeCurve(chamber_bonus_timer / m_chamber_bonus_timer))
+var col = COL_FRIENDLY_DARK
+
+scrDrawHealthRing(x, y, 28, 2, totalSegments, currentSegments, 0, 360, 1, col)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Invincible Flashing
+
+image_alpha = 1
+if (is_invincible) {
+    if (current_time % 2 == 0) {
+        image_alpha = 0.2
+    }
+}
 </string>
           </argument>
         </arguments>

@@ -43,38 +43,67 @@ waveCounts[1] = 50
 waveCounts[2] = 45
 waveCounts[3] = 50
 waveCounts[4] = 40
+waveCounts[5] = 35
+waveCounts[6] = 40
+waveCounts[7] = 40
 
 // --- Wave Enemy Types ---
 globalvar waveTypes;
 
 //wave 1 (melee)
-waveTypes[0, 0] = 1
-waveTypes[0, 1] = 2
+waveTypes[0, 0] = ENEMY_CHASER
+waveTypes[0, 1] = ENEMY_DIVER
 
 //wave 2 (add strafers)
-waveTypes[1, 0] = 1
-waveTypes[1, 1] = 2
-waveTypes[1, 2] = 4
+waveTypes[1, 0] = ENEMY_CHASER
+waveTypes[1, 1] = ENEMY_DIVER
+waveTypes[1, 2] = ENEMY_TRAVELLER
 
 //Melee Boss
 
-//wave 3 (add shielder)
-waveTypes[2, 0] = 4
-waveTypes[2, 1] = 1
-waveTypes[2, 2] = 2
-waveTypes[2, 3] = 3
+//wave 3 (add tracker)
+waveTypes[2, 0] = ENEMY_TRAVELLER
+waveTypes[2, 1] = ENEMY_CHASER
+waveTypes[2, 2] = ENEMY_DIVER
+waveTypes[2, 3] = ENEMY_TRACKER
 
-//wave 4 (add shooters)
-waveTypes[3, 0] = 0
-waveTypes[3, 1] = 1
-waveTypes[3, 2] = 2
-waveTypes[3, 3] = 3
+//wave 4 (add shielders)
+waveTypes[3, 0] = ENEMY_SHIELDER
+waveTypes[3, 1] = ENEMY_CHASER
+waveTypes[3, 2] = ENEMY_DIVER
+waveTypes[3, 3] = ENEMY_TRACKER
+waveTypes[3, 4] = ENEMY_SHIELDER
 
-//Shooting+Spawning Boss
+// Shooting+Spawning Boss
 
-//wave 5 ()
-waveTypes[4, 0] = 5
-waveTypes[4, 1] = 1
+//wave 5 (add dive bombers)
+waveTypes[4, 0] = ENEMY_EXPLODER
+waveTypes[4, 1] = ENEMY_CHASER
+
+//wave 6 (add spawners)
+waveTypes[5, 0] = ENEMY_SPAWNER
+waveTypes[5, 1] = ENEMY_TRAVELLER
+waveTypes[5, 2] = ENEMY_CHASER
+waveTypes[5, 3] = ENEMY_CHASER
+
+// Laser Boss
+
+//wave 7 (add splitter)
+
+waveTypes[6, 0] = ENEMY_SPLITTER
+waveTypes[6, 1] = ENEMY_TRAVELLER
+waveTypes[6, 2] = ENEMY_CHASER
+waveTypes[6, 3] = ENEMY_TELEKINETIC
+
+//wave 8 (add telekinesis)
+waveTypes[7, 0] = ENEMY_SPLITTER
+waveTypes[7, 1] = ENEMY_TRAVELLER
+waveTypes[7, 2] = ENEMY_TELEKINETIC
+
+
+// FINAL BOSS
+
+// loop
 
 // --- Extra Health Chance ---
 globalvar ehChance;
@@ -84,6 +113,8 @@ ehChance[2] = .03
 ehChance[3] = .02
 ehChance[4] = .02
 ehChance[5] = .02
+ehChance[6] = .02
+ehChance[7] = .02
 
 // --- Rooms ---
 globalvar startroom, deadroom, menuroom;
@@ -94,6 +125,14 @@ menuroom = MENU
 // --- Starting Wave ---
 globalvar startwave;
 startwave = oWave1
+
+// spawning delays
+global.wave_delay = 3 * (room_speed)
+
+// --- Lapping + Wave ---
+globalvar lap;
+globalvar wave_num;
+lap = 1
 
 </string>
           </argument>
@@ -120,6 +159,10 @@ startwave = oWave1
 /* INPUTS */
 //does it exist?
 if (!file_exists("inputs.ini")) {
+    scrCreateDefaultInputsFile()
+} else {
+    // DELETE IT - WANT ABILITY TO UPDATE FILES ON MOBILE
+    file_delete("inputs.ini")
     scrCreateDefaultInputsFile()
 }
 

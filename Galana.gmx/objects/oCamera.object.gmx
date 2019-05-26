@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Intialize
+            <string>///Initialize
 
 //Screen Shake
 shake_x = 0

@@ -46,7 +46,7 @@ pref_height = 90
 pref_height_spd = .05
 
 //screen shake
-shake_amount = 5
+shake_amount = 3
 shake_amount_death = 20
 
 //attack
@@ -62,9 +62,33 @@ attack_timer = 0
 
 timer_default = room_speed * 3
 timer_wait = room_speed * .15
+rage = false
 
 //am i colliding?
 colliding = false
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Has less health
+hth_max = 80
+hth = hth_max
 </string>
           </argument>
         </arguments>
@@ -140,6 +164,28 @@ if (place_meeting(x, y, attack_target)) {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Go into Rage?
+if (hth &lt; hth_max/3 or lap &gt; 1) rage = true
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -164,7 +210,7 @@ if (place_meeting(x, y, attack_target)) {
 image_blend = c_white
 
 //flash before shooting
-if (attack_state == "default" and attack_timer &gt; (timer_default - 30)) {
+if ((attack_state == "default" and attack_timer &gt; (timer_default - 30)) or rage) {
     if ((current_time/2) % 2 == 0) {
         image_blend = COL_ENEMY_DARK
     }

@@ -23,4 +23,6 @@ if (bullet_timer >= m_bullet_timer) {
         
         //switch side
         bullet_which *= -1
+        
+        return b
 }

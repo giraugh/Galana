@@ -36,6 +36,11 @@ team = TEAM_FRIENDLY
 
 //anim speed
 image_speed = .5
+
+// make a trail (for final boss)
+do_trail = false
+
+is_missile = false
 </string>
           </argument>
         </arguments>
@@ -57,6 +62,7 @@ image_speed = .5
           <argument>
             <kind>1</kind>
             <string>///Audio
+audio_sound_pitch(player_shoot, random(1.2)/2 + .6)
 scrPlaySound(player_shoot)
 </string>
           </argument>
@@ -135,6 +141,32 @@ image_alpha = 1
 if (place_meeting(x, y, oEnemy)) {
     if (instance_place(x, y, oEnemy).team != team) {
         image_alpha = .45
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Trails
+if do_trail {
+    with (scrCreateTrail()) {
+        image_blend = COL_ENEMY_PURPLE_LIGHT
     }
 }
 </string>

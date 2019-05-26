@@ -1,5 +1,7 @@
 ///scrBossAI_1()
 
+//default -> gotoleft -> shoot -> spawn -> default
+
 p = instance_nearest(x, y, attack_target)
 
 switch (attack_state) {
@@ -9,7 +11,7 @@ switch (attack_state) {
         attack_timer++
         if (attack_timer > timer_default) {
             attack_timer = 0
-            attack_state = "shoot"
+            attack_state = "gotoleft"
         }
         
         //follow player
@@ -17,24 +19,60 @@ switch (attack_state) {
             x = lerp(x, p.x, attack_speed_default)
         }
     break
+    
+    case "gotoleft":
+        x = lerp(x, 32, attack_speed_default * 1.2)
+        attack_timer++
+        if (attack_timer > timer_move) {
+            attack_timer = 0
+            attack_state = "shootright"
+        }
+    break
+    
+    case "gotoright":
+        x = lerp(x, room_width-32, attack_speed_default * 1.2)
+        attack_timer++
+        if (attack_timer > timer_move) {
+            attack_timer = 0
+            attack_state = "shootleft"
+        }
+    break
 
-    case "shoot":
+    case "shootright":
         //shoot
         scrShoot(1, oBulletEnemy)
         
         //increase timer
         bullet_timer++
         
-        //increase state timer
-        attack_timer++
-        if (attack_timer > timer_shoot) {
+        //finished?
+        if (x > room_width - 90) {
             attack_timer = 0
             attack_state = "spawn"
         }
         
-        //follow player
+        //go to right
         if (instance_exists(p)) {
-            x = lerp(x, p.x, attack_speed_shoot)
+            x += 3.5
+        }
+    break
+    
+        case "shootleft":
+        //shoot
+        scrShoot(1, oBulletEnemy)
+        
+        //increase timer
+        bullet_timer++
+        
+        //finished?
+        if (x < 90) {
+            attack_timer = 0
+            attack_state = "spawn"
+        }
+        
+        //go to left
+        if (instance_exists(p)) {
+            x -= 3.5
         }
     break
     
@@ -65,12 +103,20 @@ switch (attack_state) {
             en.shake_amount = 5
         }
         
+        //leave some more room
+        y = lerp(y, pref_height / 2, pref_height_spd * 1.3)
+        
         //increase state timer
         attack_timer++
         if (attack_timer > timer_spawn) {
             attack_timer = 0
-            attack_state = "default"
+            attack_state = choose("gotoleft", "gotoright")
         }
     break
 
+}
+
+//start to float if flashing
+if ((attack_state == "gotoleft" or attack_state == "gotoright") and attack_timer > (timer_default - 20)) {
+    x += irandom_range(-4, 4)
 }

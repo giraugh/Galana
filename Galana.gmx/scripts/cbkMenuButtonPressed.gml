@@ -15,7 +15,17 @@ switch (argument0) {
     break
     
     case "useless":
-        show_message("if you know what this button should do, tell me.")
+        // Go to scores room
+        var sf = instance_create(0,0, oSwipeFade);
+        sf.room_to_goto = SCORES
+        sf.rect_colour = COL_ENEMY_LIGHT
+        sf.other_side = true
+    break
+    
+    case "scores_back":
+        var sf = instance_create(0,0, oSwipeFade);
+        sf.room_to_goto = MENU
+        sf.rect_colour = COL_ENEMY_LIGHT
     break
 }
 

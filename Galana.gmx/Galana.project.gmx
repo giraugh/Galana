@@ -24,6 +24,7 @@
       <sprite>sprites\sPlayer_Shooting</sprite>
       <sprite>sprites\sPlayer_Idle</sprite>
       <sprite>sprites\sPlayer_Bullet</sprite>
+      <sprite>sprites\sMissile</sprite>
       <sprite>sprites\sPlayer_Fire</sprite>
     </sprites>
     <sprites name="Enemies">
@@ -32,6 +33,9 @@
       <sprite>sprites\sEnemy_Fire_3</sprite>
       <sprite>sprites\sEnemy_Fire_4</sprite>
       <sprite>sprites\sEnemy_Fire_5</sprite>
+      <sprite>sprites\sEnemy_Fire_6</sprite>
+      <sprite>sprites\sEnemy_Fire_7</sprite>
+      <sprite>sprites\sEnemy_Fire_8</sprite>
       <sprite>sprites\sEnemy_1</sprite>
       <sprite>sprites\sEnemy_2</sprite>
       <sprite>sprites\sEnemy_3_transform</sprite>
@@ -41,23 +45,39 @@
       <sprite>sprites\sEnemy_5</sprite>
       <sprite>sprites\sEnemy_Bullet</sprite>
       <sprite>sprites\sEnemy_Bullet_Dissipate</sprite>
+      <sprite>sprites\sEnemy_6</sprite>
+      <sprite>sprites\sEnemy_7</sprite>
+      <sprite>sprites\sEnemy_8</sprite>
+      <sprite>sprites\sEnemy_9</sprite>
     </sprites>
     <sprites name="Bosses">
       <sprite>sprites\sBoss1</sprite>
       <sprite>sprites\sBoss2</sprite>
+      <sprite>sprites\sBoss3</sprite>
       <sprite>sprites\sBoss_Bullet</sprite>
       <sprite>sprites\sBoss_Bullet_Dissipate</sprite>
+      <sprites name="BossFinal">
+        <sprite>sprites\sBossFinalFront</sprite>
+        <sprite>sprites\sBossFinalEye</sprite>
+        <sprite>sprites\sBossFinalBack</sprite>
+        <sprites name="Sub">
+          <sprite>sprites\sBossFinalSubFront</sprite>
+          <sprite>sprites\sBossFinalSubEye</sprite>
+          <sprite>sprites\sBossFinalSubBack</sprite>
+        </sprites>
+      </sprites>
     </sprites>
     <sprites name="Gui &amp; Fx">
-      <sprite>sprites\sButtonHover</sprite>
       <sprite>sprites\sButton</sprite>
+      <sprite>sprites\sScoresBackButton</sprite>
+      <sprite>sprites\sButtonHover</sprite>
       <sprite>sprites\sPauseButton</sprite>
       <sprite>sprites\sPauseButtonHover</sprite>
-      <sprite>sprites\sExplosion</sprite>
       <sprite>sprites\sBigExplosion</sprite>
       <sprites name="Particles">
         <sprite>sprites\sPartSmoke</sprite>
       </sprites>
+      <sprite>sprites\sMiniExplosion</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
@@ -77,6 +97,7 @@
     <scripts name="callbacks">
       <script>scripts\cbkJustSpawned.gml</script>
       <script>scripts\cbkMenuButtonPressed.gml</script>
+      <script>scripts\cbkDoLap.gml</script>
     </scripts>
     <scripts name="actions">
       <script>scripts\scrTakeDamage.gml</script>
@@ -90,11 +111,26 @@
       <script>scripts\choose_array.gml</script>
       <script>scripts\array_get_second_dimension.gml</script>
       <script>scripts\lerp_col.gml</script>
+      <script>scripts\scrShotChargeCurve.gml</script>
     </scripts>
     <scripts name="AI routines">
       <script>scripts\scrEnemyAI.gml</script>
-      <script>scripts\scrBossAI_2.gml</script>
       <script>scripts\scrBossAI_1.gml</script>
+      <script>scripts\scrBossAI_2.gml</script>
+      <script>scripts\scrBossAI_Final.gml</script>
+      <script>scripts\scrBossAI_3.gml</script>
+      <script>scripts\scrBossAi_FinalSub.gml</script>
+      <scripts name="Enemies">
+        <script>scripts\scrTracker_0.gml</script>
+        <script>scripts\scrChaser_1.gml</script>
+        <script>scripts\scrDiver_2.gml</script>
+        <script>scripts\scrShielder_3.gml</script>
+        <script>scripts\scrTraveller_4.gml</script>
+        <script>scripts\scrExploder_5.gml</script>
+        <script>scripts\scrSpawner_6.gml</script>
+        <script>scripts\scrTelekinetic_7.gml</script>
+        <script>scripts\scrSplitter_8.gml</script>
+      </scripts>
     </scripts>
     <scripts name="mobile">
       <script>scripts\scrMobileInputType.gml</script>
@@ -147,6 +183,7 @@
     </scripts>
     <scripts name="drawing">
       <script>scripts\scrDrawWaveDisp.gml</script>
+      <script>scripts\scrDrawRunRecord.gml</script>
     </scripts>
     <scripts name="fx">
       <script>scripts\scrCreateBigExplosionOnUs.gml</script>
@@ -155,6 +192,16 @@
         <script>scripts\scrDefineSmokeSystem.gml</script>
         <script>scripts\scrEmitSmoke.gml</script>
       </scripts>
+      <script>scripts\scrCreateTrail.gml</script>
+    </scripts>
+    <scripts name="score_keeping">
+      <script>scripts\scrRecordRun.gml</script>
+      <script>scripts\scrGetRunScore.gml</script>
+      <script>scripts\scrGetRunWave.gml</script>
+      <script>scripts\scrGetRunLap.gml</script>
+      <script>scripts\scrGetNumberRuns.gml</script>
+      <script>scripts\scrGetHighScore.gml</script>
+      <script>scripts\scrGetHighScoreIndex.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -170,6 +217,7 @@
     <objects name="Player">
       <object>objects\oPlayer</object>
       <object>objects\oBullet</object>
+      <object>objects\oMissile</object>
       <object>objects\oPlayerFire</object>
     </objects>
     <objects name="Enemy">
@@ -192,14 +240,20 @@
         <object>objects\pFadeOut</object>
         <object>objects\oCameraFlash</object>
         <object>objects\oWaveCompleted</object>
+        <object>objects\oLapCompleted</object>
+        <object>objects\oPickupGet</object>
+        <object>objects\oLapMessage</object>
         <object>objects\oBigExplosion</object>
         <object>objects\oShieldDissipation</object>
       </objects>
       <objects name="MenuScreen">
         <object>objects\oMenuButton</object>
+        <object>objects\oScoresBackButton</object>
         <object>objects\oPauseButton</object>
         <object>objects\oSwipeFade</object>
+        <object>objects\oFadeIn</object>
       </objects>
+      <object>objects\oTrail</object>
     </objects>
     <objects name="Spawners">
       <object>objects\pSpawner</object>
@@ -213,6 +267,8 @@
       <object>objects\oMainMenuControl</object>
       <object>objects\oGamePauseControl</object>
       <object>objects\oPausedPauseControl</object>
+      <object>objects\oControlBeforeLap</object>
+      <object>objects\oScoresControl</object>
     </objects>
     <objects name="Waves">
       <object>objects\oWave1</object>
@@ -220,22 +276,33 @@
       <object>objects\oWave3</object>
       <object>objects\oWave4</object>
       <object>objects\oWave5</object>
+      <object>objects\oWave6</object>
+      <object>objects\oWave7</object>
+      <object>objects\oWave8</object>
       <object>objects\pWave</object>
     </objects>
     <objects name="Bosses">
       <object>objects\pBoss</object>
-      <object>objects\oBoss2</object>
       <object>objects\oBoss1</object>
+      <object>objects\oBoss2</object>
+      <object>objects\oBoss3</object>
+      <object>objects\oBossFinal</object>
       <object>objects\oDeadBoss</object>
       <object>objects\oBossChunk</object>
+      <object>objects\oBossSubFinal</object>
+    </objects>
+    <objects name="Pickups">
+      <object>objects\oEye</object>
     </objects>
   </objects>
+  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\MENU</room>
     <room>rooms\MAIN</room>
     <room>rooms\DEAD</room>
     <room>rooms\PAUSE</room>
     <room>rooms\PARTICLE_TEST</room>
+    <room>rooms\SCORES</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
